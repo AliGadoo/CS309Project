@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
-const mongodbURL = "mongodb://localhost:27017/";
+const mongodbURL = "mongodb://localhost:27017/CS309Project";
 
 const app = express();
 app.use(express.json());
