@@ -43,6 +43,28 @@ app.post("/signup", async (req, res) => {
     return res.json({ success: false, message: "something went wrong" });
   }
 });
+
+app.post(`/login`, async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.json({ success: false, message: "this email not found" });
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.json({ success: false, message: "wrong password" });
+    }
+    return res.json({
+      success: true,
+      message: "user logged in successfully",
+      user: user,
+    });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
 //     add product      //
 
 app.post("/addProduct", async (req, res) => {
