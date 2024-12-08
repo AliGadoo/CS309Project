@@ -34,7 +34,7 @@ function App() {
             path="/signup" 
             element={<Signup setUser={setCurrentUser} />}
           />
-          <Route path="/login" element={<Login />}  />
+          <Route path="/login" element={<Login setUser={setCurrentUser} />}  />
         </Routes>
       </div>
     </Router>
