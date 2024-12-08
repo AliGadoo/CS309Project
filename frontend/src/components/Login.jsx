@@ -26,26 +26,18 @@ const Login = ({setUser}) => {
             console.error("Error during signup:", error);
           });
       };
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    }
     return ( 
        <div className="login-container">
            <h2>Login</h2>   
            <form>
                <label htmlFor="email">Email:</label>
-               <input type="email" id="email" value={email} onChange={handleEmailChange} />
+               <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                <label htmlFor="password">Password:</label>
                <input type="password" 
                 required
                 id="password" 
                 value={password} 
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
                 />
                <button onClick={handleSignup}>Login</button>
                <p className="signup">Don't have an account? <Link to="/signup">Signup</Link></p>
