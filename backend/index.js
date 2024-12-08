@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const cors = require("cors");
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
 const mongodbURL = "mongodb://localhost:27017/CS309Project";
@@ -8,6 +9,7 @@ const mongodbURL = "mongodb://localhost:27017/CS309Project";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 mongoose
   .connect(mongodbURL)

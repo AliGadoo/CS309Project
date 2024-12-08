@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    font-family: "Quicksand";
+    box-sizing: border-box;
+    color: #171717e2;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* signup styles */
+.sign-up-container {
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgb(224, 185, 185);
+    margin: 80px auto;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.sign-up-container h2 {
+    font-size: 35px;
+}
+
+.sign-up-container label {
+    text-align: left;
+    display: block;
+}
+
+.sign-up-container input {
+    width: 100%;
+    padding: 6px 12px;
+    margin: 10px 0px 30px 0px;
+    border-radius: 10px;
+    border: none;
+}
+
+.sign-up-container form {
+    margin-top: 20px;
+}
+
+.sign-up-container button {
+    border: none;
+    width: 100px;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #171717e2;
+    color: white;
+    cursor: pointer;
+}
+
+.sign-up-container div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
