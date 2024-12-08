@@ -1,77 +1,69 @@
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose"); 
-
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
+const mongodbURL = "mongodb://localhost:27017/";
 
-app.use(express.json()) ;
-app.use(express.urlencoded({extended: false}))
-const bcrypt = require('bcrypt');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-mongoose.connect("mongodb://localhost:27017/")
-.then(() => {
-  console.log("database connected successfully");
-})
-.catch((err) => {
-  console.log( "connection to database failed",err);
-}) 
+mongoose
+  .connect(mongodbURL)
+  .then(() => {
+    console.log("database connected successfully");
+  })
+  .catch((err) => {
+    console.log("connection to database failed", err);
+  });
 
-       //    signup     //
+//    signup     //
 
-app.post("/signup", async(req, res) => {
-     
-  try{
-   const user = new User(req.body);
+app.post("/signup", async (req, res) => {
+  try {
+    const user = new User(req.body);
 
-   if(await User.findOne({email:user.email})){
-    console.log("This email already exists");
-     return res.status(400).send(" This email already exists");  
-   }
-
-   const salt = await bcrypt.genSalt(10);
-   user.password = await bcrypt.hash(user.password, salt);
-   
-   await user.save();
-   res.send("student added successfully with")
-   console.log("student added successfully ")
-
-  }catch(err){  
-    console.log(err);
-    res.status(400).send("student not added" ,err);
-  }
-
-});
-       //     add product      //  
-
-app.post("/addproduct", async(req, res) => { 
-  try{
-    const product = new Product(req.body);
-
-    if(await Product.findOne({name:product.name})){
-      console.log("This product already exists");
-      return res.status(400).send(" This product already exists");
+    if (await User.findOne({ email: user.email })) {
+      return res.json({ success: false, message: "This email already exists" });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+
+    await user.save();
+    res.json({
+      success: true,
+      message: "user added successfully",
+      user: user,
+    });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+//     add product      //
+
+app.post("/addProduct", async (req, res) => {
+  try {
+    const product = new Product(req.body);
+
+    if (await Product.findOne({ name: product.name })) {
+      // we will add logic if this product exist add 1 more on the stock of this product
+    }
     await product.save();
-    res.send("product added successfully");
-    console.log("product added successfully")
-  }catch(err){
-    console.log(err);
-    res.status(400).send("product not added", err);
+    res.json({
+      success: true,
+      message: "product added successfully",
+    });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
   }
 });
 
-
-
-
-
-app.get("/", (req, res) => {    
-  res.send("hello world");  
+app.get("/", (req, res) => {
+  res.send("hello world");
 });
 
 app.listen(5000, () => {
   console.log("app listening at 5000 port");
 });
-
-
