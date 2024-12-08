@@ -18,15 +18,19 @@ const Signup = ({ setUser }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        const { password, ...safeUser } = user;
-        setUser(safeUser);
-        navigate('/');
+        if (data) {
+          localStorage.setItem("currentUser", JSON.stringify(data));
+          setUser(data);
+          navigate('/');
+        } else {
+          console.error("Error: Response is empty or invalid.");
+        }
       })
       .catch((error) => {
         console.error("Error during signup:", error);
       });
   };
+  
 
   return (
     <div className="sign-up-container">

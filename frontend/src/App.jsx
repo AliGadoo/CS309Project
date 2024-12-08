@@ -8,18 +8,22 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
     }
   }, []);
+
   useEffect(() => {
     if (currentUser) {
-      localStorage.setItem("user", JSON.stringify(currentUser));
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      console.log(currentUser.user);
     } else {
-      localStorage.removeItem("user");
+      localStorage.removeItem("currentUser");
     }
   }, [currentUser]);
+
+
 
   return (
     <Router>
