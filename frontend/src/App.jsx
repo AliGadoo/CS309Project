@@ -30,7 +30,7 @@ function App() {
             path="/signup" 
             element={<Signup setUser={setCurrentUser} />}
           />
-          <Route element={<Login />} path="/login" />
+          <Route path="/login" element={<Login />}  />
         </Routes>
       </div>
     </Router>
