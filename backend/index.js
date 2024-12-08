@@ -43,7 +43,7 @@ app.post("/signup", async (req, res) => {
     return res.json({ success: false, message: "something went wrong" });
   }
 });
-
+ //   login   //
 app.post(`/login`, async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -64,6 +64,26 @@ app.post(`/login`, async (req, res) => {
     return res.json({ success: false, message: "something went wrong" });
   }
 });
+
+
+ // delete user //
+
+ app.delete("/deleteUser", async (req, res) => {
+    
+  try{
+    const userEmail = req.body.email;
+    const user = await User.findOneAndDelete({email : userEmail});
+ 
+    if(!res){
+      return res.json({ success: false , message: "user not found"});
+    }
+    
+    res.json({ success: true , message: "user deleted successfully"});
+  }catch(err){
+      return res.json({ success: false, message: "something went wrong" });
+  }
+}) 
+
 
 //     add product      //
 
