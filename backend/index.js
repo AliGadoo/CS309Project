@@ -197,6 +197,23 @@ app.delete(`/product/:id`, async (req, res) => {
   }
 });
 
+app.patch(`/editProduct/:id`, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.json({ success: false, message: "Invalid product ID" });
+    }
+
+    await Product.updateOne({ _id: id }, { $set: updates });
+    const updatedProduct = await Product.findById(id);
+    res.json({ success: true, product: updatedProduct });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("hello world");
 });
