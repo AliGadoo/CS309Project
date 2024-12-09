@@ -84,6 +84,53 @@ app.post(`/login`, async (req, res) => {
   }
 }) 
 
+//  update user //
+
+app.patch("/updateUser", async (req, res) => {
+     try{
+  
+  
+      const user = await User.findOne({email : req.body.email}); 
+
+     const updatedData = {} ;
+ 
+
+    if(req.body.password){
+    
+       if(!(req.body.confirmPassword) || (req.body.password !== req.body.confirmPassword)){
+         return res.json({ success: false, message: "passwords do not match confirmPassword"});
+       }
+      const salt = await bcrypt.genSalt(10);
+      updatedData.password = await bcrypt.hash(req.body.password, salt);
+    }
+
+      // الطريقة طويلة لكن انا هندلتها بالطريقة دي عشان انا مش عارف 
+      //اليوزر عايز يحدث اني اتربيوت بالظبط فانا لازم اشوف هو باعت يحدث اي واحدثهولة //
+      
+
+     if(req.body.name){
+       updatedData.name = req.body.name;
+     }
+    
+     if(req.body.address){
+       updatedData.address = req.body.address;
+     }
+     if(req.body.image){
+       updatedData.image = req.body.image;
+     }
+     if(req.body.phone){
+       updatedData.phone = req.body.phone;
+     }
+
+     await User.updateOne(user , updatedData);
+     res.json({ success: true, message: "user updated successfully"});
+
+    }
+    catch(err){
+      return res.json({ success: false, message: "something went wrong" });
+    }
+
+})
 
 //     add product      //
 
