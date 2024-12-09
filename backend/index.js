@@ -150,10 +150,26 @@ app.post("/addProduct", async (req, res) => {
 app.get(`/allProducts`, async (req, res) => {
   try {
     const products = await Product.find();
-    if (!products) {
+    if (!products.length) {
       return res.json({ success: false, message: "there are no products yet" });
     }
     res.json({ success: true, products: products });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
+app.get(`/product/:id`, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.json({
+        success: false,
+        message: "there is no product with this id",
+      });
+    }
+    res.json({ success: true, product: product });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
   }
