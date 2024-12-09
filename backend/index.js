@@ -43,7 +43,7 @@ app.post("/signup", async (req, res) => {
     return res.json({ success: false, message: "something went wrong" });
   }
 });
- //   login   //
+//   login   //
 app.post(`/login`, async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -65,72 +65,68 @@ app.post(`/login`, async (req, res) => {
   }
 });
 
+// delete user //
 
- // delete user //
-
- app.delete("/deleteUser", async (req, res) => {
-    
-  try{
+app.delete("/deleteUser", async (req, res) => {
+  try {
     const userEmail = req.body.email;
-    const user = await User.findOneAndDelete({email : userEmail});
- 
-    if(!res){
-      return res.json({ success: false , message: "user not found"});
+    const user = await User.findOneAndDelete({ email: userEmail });
+
+    if (!res) {
+      return res.json({ success: false, message: "user not found" });
     }
-    
-    res.json({ success: true , message: "user deleted successfully"});
-  }catch(err){
-      return res.json({ success: false, message: "something went wrong" });
+
+    res.json({ success: true, message: "user deleted successfully" });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
   }
-}) 
+});
 
 //  update user //
 
 app.patch("/updateUser", async (req, res) => {
-     try{
-  
-  
-      const user = await User.findOne({email : req.body.email}); 
+  try {
+    const user = await User.findOne({ email: req.body.email });
 
-     const updatedData = {} ;
- 
+    const updatedData = {};
 
-    if(req.body.password){
-    
-       if(!(req.body.confirmPassword) || (req.body.password !== req.body.confirmPassword)){
-         return res.json({ success: false, message: "passwords do not match confirmPassword"});
-       }
+    if (req.body.password) {
+      if (
+        !req.body.confirmPassword ||
+        req.body.password !== req.body.confirmPassword
+      ) {
+        return res.json({
+          success: false,
+          message: "passwords do not match confirmPassword",
+        });
+      }
       const salt = await bcrypt.genSalt(10);
       updatedData.password = await bcrypt.hash(req.body.password, salt);
     }
 
-      // الطريقة طويلة لكن انا هندلتها بالطريقة دي عشان انا مش عارف 
-      //اليوزر عايز يحدث اني اتربيوت بالظبط فانا لازم اشوف هو باعت يحدث اي واحدثهولة //
-      
+    // الطريقة طويلة لكن انا هندلتها بالطريقة دي عشان انا مش عارف
+    //اليوزر عايز يحدث اني اتربيوت بالظبط فانا لازم اشوف هو باعت يحدث اي واحدثهولة //
 
-     if(req.body.name){
-       updatedData.name = req.body.name;
-     }
-    
-     if(req.body.address){
-       updatedData.address = req.body.address;
-     }
-     if(req.body.image){
-       updatedData.image = req.body.image;
-     }
-     if(req.body.phone){
-       updatedData.phone = req.body.phone;
-     }
-
-     await User.updateOne(user , updatedData);
-     res.json({ success: true, message: "user updated successfully"});
-
-    }
-    catch(err){
-      return res.json({ success: false, message: "something went wrong" });
+    if (req.body.name) {
+      updatedData.name = req.body.name;
     }
 
-})
+    if (req.body.address) {
+      updatedData.address = req.body.address;
+    }
+    if (req.body.image) {
+      updatedData.image = req.body.image;
+    }
+    if (req.body.phone) {
+      updatedData.phone = req.body.phone;
+    }
+
+    await User.updateOne(user, updatedData);
+    res.json({ success: true, message: "user updated successfully" });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
 
 //     add product      //
 
@@ -146,6 +142,18 @@ app.post("/addProduct", async (req, res) => {
       success: true,
       message: "product added successfully",
     });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
+app.get(`/allProducts`, async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (!products) {
+      return res.json({ success: false, message: "there are no products yet" });
+    }
+    res.json({ success: true, products: products });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
   }
