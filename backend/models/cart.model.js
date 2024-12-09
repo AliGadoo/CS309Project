@@ -3,7 +3,12 @@ const Schema = mongoose.Schema;
 const cartSchema = new Schema(
   {
     userID: { type: mongoose.Schema.Types.ObjectId, required: true },
-    productIDs: { type: [mongoose.Schema.Types.ObjectId] },
+    products: [
+      {
+        productID: { type: mongoose.Schema.Types.ObjectId, required: true },
+        count: { type: Number, required: true, default: 1 },
+      },
+    ],
   },
   { timestamps: true }
 );
