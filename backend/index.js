@@ -162,6 +162,9 @@ app.get(`/allProducts`, async (req, res) => {
 app.get(`/product/:id`, async (req, res) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.json({ success: false, message: "Invalid product ID" });
+    }
     const product = await Product.findById(id);
     if (!product) {
       return res.json({
@@ -170,6 +173,25 @@ app.get(`/product/:id`, async (req, res) => {
       });
     }
     res.json({ success: true, product: product });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
+app.delete(`/product/:id`, async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.json({ success: false, message: "Invalid product ID" });
+    }
+    const product = await Product.findByIdAndDelete(id);
+    if (!product) {
+      return res.json({
+        success: false,
+        message: "there is no product with this id",
+      });
+    }
+    res.json({ success: true, message: "the product has been deleted" });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
   }
