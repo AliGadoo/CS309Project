@@ -1,0 +1,79 @@
+/* الحاوية الرئيسية للبطاقات */
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* تصميم البطاقة */
+.product-item {
+  flex: 1 1 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.product-item:hover {
+  transform: scale(1.05);
+}
+.product-item .card-body {
+  padding: 15px;
+  text-align: center;
+}
+
+.product-item .card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-item .card-text {
+  font-size: 0.9rem;
+  color: #666;
+  height: 40px; /* لتحديد مساحة النص */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-item button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-item button:hover {
+  background-color: #0056b3;
+}
+
+/* استجابة التصميم للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .product-item {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-item {
+    flex: 1 1 100%;
+  }
+}
+.product-item img {
+  width: 100%; /* عرض الصورة يملاً البطاقة */
+  height: 200px; /* ارتفاع موحد لجميع الصور */
+  object-fit: cover; /* لضمان أن الصورة تتناسب مع الإطار */
+  border-top-left-radius: 8px; /* لتناسق التصميم */
+  border-top-right-radius: 8px;
+}
