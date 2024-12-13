@@ -10,7 +10,6 @@
 /* تصميم البطاقة */
 .product-item {
   flex: 1 1 calc(25% - 20px);
-  max-width: calc(25% - 20px);
   box-sizing: border-box;
   border: 1px solid #ddd;
   border-radius: 8px;

@@ -35,26 +35,38 @@ const Login = ({ setUser }) => {
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}> {/* استخدام onSubmit بدلاً من onClick */}
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          required
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button> {/* استخدام type="submit" */}
-        
+      <form onSubmit={handleLogin}>
+        {" "}
+        {/* استخدام onSubmit بدلاً من onClick */}
+        <div className="login-box">
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="email">Email:</label>
+        </div>
+        <div className="login-box">
+          <input
+            type="password"
+            required
+            id="password"
+            value={password}
+              onChange={(e) => setPassword(e.target.value)}
+          />
+          <label htmlFor="password">Password:</label>
+        </div>
+        <button type="submit">
+          <span class="position-absolute d-block"></span>
+          <span class="position-absolute d-block"></span>
+          <span class="position-absolute d-block"></span>
+          <span class="position-absolute d-block"></span>
+          Login
+        </button>{" "}
+        {}
         <p className="signup">
-          Don't have an account? <Link to="/signup">Signup</Link>
+          Don't have an account? <Link to="/signup"><button>Sign up</button> </Link>
         </p>
       </form>
     </div>

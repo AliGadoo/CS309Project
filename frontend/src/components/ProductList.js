@@ -15,13 +15,15 @@ function ProductList() {
   return (
     <>
       <h2 className="section-title">Our Products</h2>
-      <div className="product-container">
-        {products.map((product) => (
-          <div className="product-item" key={product.id}>
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </div>
+      {
+        products && <div className="product-container">
+          {products.map((product) => (
+            <div className="product-item" key={product.id}>
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      }
     </>
   );
 }
