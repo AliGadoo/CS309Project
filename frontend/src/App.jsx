@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import OrderPage from './components/OrderPage'; // استيراد صفحة Order
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -23,18 +24,14 @@ function App() {
     }
   }, [currentUser]);
 
-
-
   return (
     <Router>
       <div className="App">
         <Routes>
           <Route element={<Home />} path="/" />
-          <Route 
-            path="/signup" 
-            element={<Signup setUser={setCurrentUser} />}
-          />
-          <Route path="/login" element={<Login setUser={setCurrentUser} />}  />
+          <Route path="/signup" element={<Signup setUser={setCurrentUser} />} />
+          <Route path="/login" element={<Login setUser={setCurrentUser} />} />
+          <Route path="/order" element={<OrderPage />} /> 
         </Routes>
       </div>
     </Router>
