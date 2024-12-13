@@ -44,7 +44,7 @@ form {
     position: absolute;
     top: -30px;
     left: 0;
-    font-size: 12px;
+    font-size: 15px;
     padding: 10px 0;
     color: #03c9f4;
     pointer-events: none;
@@ -68,7 +68,7 @@ form {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    width: 38%;
+    width: 100%;
     letter-spacing: 4px;
     font-size: 20px;
     overflow: hidden;
@@ -184,12 +184,12 @@ button span:nth-child(1) {
 }
 @media (max-width: 768px) {
     .login-container {
-        width: 80%; /* Increase width for small screens */
+        width: 80%; 
         padding: 20px;
     }
 
     .login-container h1 {
-        font-size: 24px; /* Reduce font size */
+        font-size: 24px; 
         margin-bottom: 15px;
     }
 
@@ -199,23 +199,22 @@ button span:nth-child(1) {
     }
 
     .login-container button {
-        width: 40%; /* Increase button width */
         font-size: 18px;
     }
 
     .login-container p {
-        font-size: 18px; /* Adjust paragraph font size */
+        font-size: 18px; 
     }
 }
 
 @media (max-width: 480px) {
     .login-container {
-        width: 90%; /* Full width for very small devices */
+        width: 90%; 
         padding: 15px;
     }
 
     .login-container h1 {
-        font-size: 20px; /* Further reduce font size */
+        font-size: 20px;
         margin-bottom: 10px;
     }
 
@@ -225,11 +224,10 @@ button span:nth-child(1) {
     }
 
     .login-container button {
-        width: 60%; /* Make button a bit larger on small screens */
         font-size: 16px;
     }
 
     .login-container p {
-        font-size: 16px; /* Adjust paragraph font size */
+        font-size: 16px; 
     }
 }
