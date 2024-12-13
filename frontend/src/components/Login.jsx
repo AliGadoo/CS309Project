@@ -5,7 +5,8 @@ import "./Login.css";
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // لإنشاء وظيفة التنقل
+  const [isValid , setIsValid] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,23 +22,25 @@ const Login = ({ setUser }) => {
         if (data) {
           localStorage.setItem("currentUser", JSON.stringify(data));
           setUser(data);
-          // توجيه المستخدم إلى صفحة Order بعد تسجيل الدخول بنجاح
-          navigate("/order");
+          setIsValid(true);
+          navigate(-1);
         } else {
           console.error("Error: Response is empty or invalid.");
+          setIsValid(false)
         }
       })
       .catch((error) => {
         console.error("Error during login:", error);
+        setIsValid(false)
       });
+      console.log(isValid);
+      
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        {" "}
-        {/* استخدام onSubmit بدلاً من onClick */}
+      <form>
         <div className="login-box">
           <input
             type="email"
@@ -57,13 +60,14 @@ const Login = ({ setUser }) => {
           />
           <label htmlFor="password">Password:</label>
         </div>
-        <button type="submit">
-          <span class="position-absolute d-block"></span>
-          <span class="position-absolute d-block"></span>
-          <span class="position-absolute d-block"></span>
-          <span class="position-absolute d-block"></span>
+        {/*TODO: show red message if user is not valid by (isValid variable)*/}
+        <button type="submit" onClick={handleLogin}>
+          <span className="position-absolute d-block"></span>
+          <span className="position-absolute d-block"></span>
+          <span className="position-absolute d-block"></span>
+          <span className="position-absolute d-block"></span>
           Login
-        </button>{" "}
+        </button>
         {}
         <p className="signup">
           Don't have an account? <Link to="/signup"><button>Sign up</button> </Link>
