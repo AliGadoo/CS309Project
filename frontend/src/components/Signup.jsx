@@ -3,13 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Signup = ({ setUser }) => {
   const navigate = useNavigate();
-
+  const [isValid , setIsValid] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage , setErrorMessage] = useState("");
 
   const handleSignup = (e) => {
     e.preventDefault();
+    if (name.trim() === "") {
+      setErrorMessage("Name cannot be empty");
+      setIsValid(false);
+      return;
+    }
+    if (email.trim() === "") {
+      setErrorMessage("Email cannot be empty");
+      setIsValid(false);
+      return;
+    }
+    if (password.trim() === "") {
+      setErrorMessage("password cannot be empty");
+      setIsValid(false);
+      return;
+    }
     const user = { name, email, password };
     fetch("http://localhost:5000/signup", {
       method: "POST",
@@ -18,16 +34,19 @@ const Signup = ({ setUser }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
+        if (data && data.user) {
           localStorage.setItem("currentUser", JSON.stringify(data));
           setUser(data);
-          navigate("/");
+          setIsValid(true);
+          navigate(-1);
         } else {
-          console.error("Error: Response is empty or invalid.");
+          setIsValid(false);
+          setErrorMessage("this email already taken")
         }
       })
       .catch((error) => {
-        console.error("Error during signup:", error);
+        setErrorMessage("failed to signup")
+        setIsValid(false);
       });
   };
 
@@ -71,6 +90,11 @@ const Signup = ({ setUser }) => {
               <span className="position-absolute d-block"></span>
               Sign up
             </button>
+            {!isValid && (
+            <p className="error-message" style={{ color: "red" }}>
+              {errorMessage}
+            </p>
+          )}
             <p>
               already have account
               <Link to="/login">

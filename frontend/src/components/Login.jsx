@@ -6,11 +6,23 @@ const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [errorMessage , setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
+
+    if (email.trim() === "") {
+      setErrorMessage("Email cannot be empty");
+      setIsValid(false);
+      return;
+    }
+    if (password.trim() === "") {
+      setErrorMessage("password cannot be empty");
+      setIsValid(false);
+      return;
+    }
 
     fetch("http://localhost:5000/login", {
       method: "POST",
@@ -26,11 +38,12 @@ const Login = ({ setUser }) => {
           navigate(-1);
         } else {
           setIsValid(false);
+          setErrorMessage("Please Enter your Email and Password correct")
         }
       })
       .catch((error) => {
-        console.error("Error during login:", error);
         setIsValid(false);
+        setErrorMessage("failed to login 1")
       });
   };
 
@@ -67,7 +80,7 @@ const Login = ({ setUser }) => {
           </button>
           {!isValid && (
             <p className="error-message" style={{ color: "red" }}>
-              The user is not valid. Please check your email and password.
+              {errorMessage}
             </p>
           )}
           <p className="signup">
