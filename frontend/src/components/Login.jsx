@@ -74,7 +74,7 @@ const Login = ({ setUser }) => {
             Don't have an account?{" "}
             <br />
             <Link to="/signup">
-              <button>Sign up</button>
+              <button className="signup-button">Sign up</button>
             </Link>
           </p>
         </form>
