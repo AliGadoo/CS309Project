@@ -3,17 +3,42 @@ import "./Home.css";
 import ProductList from "./ProductList";
 
 const Home = () => {
-    return ( 
-        <div className="home-container">
-            <h1>home</h1>
-            <p>This is the home page</p>
-            
-            
-            <Link to="/login"><button>Login</button></Link>
-            <Link to="/signup"><button>Signup</button></Link>
-            <ProductList/>
+  return (
+    <div className="home-container">
+      <div className="nav">
+        <div className="con666">
+          <div className="cu-logo">
+            <h1>
+              Home
+            </h1>
+          </div>
+          <div className="nav-links" id="demo">
+            <ul>
+            <li className="e">
+                  <button className="active">Home</button>
+              </li>
+              <li className="e">
+                <Link to="/login">
+                  <button>Login</button>
+                </Link>{" "}
+              </li>
+              <li className="e">
+                <Link to="/signup">
+                  <button>Signup</button>
+                </Link>{" "}
+              </li>
+              <li className="e">
+              <button>Gallry</button>
+              </li>
+            </ul>
+          </div>
         </div>
-     );
-}
- 
+      </div>
+
+  
+      <ProductList />
+    </div>
+  );
+};
+
 export default Home;

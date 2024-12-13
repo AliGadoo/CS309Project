@@ -2,14 +2,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
 }
-
+.con666{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav{
+    width: 100%;
+    background-color: black;
+}
 .home-container h1 {
-    font-size: 50px;
-    margin-bottom: 20px;
+    font-size: 40px;
+    color: #fff;
+    padding: 20px 0px 20px 40px;
 }
-
+.nav-links a{
+    color: #fff;
+}
+.nav-links ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+.nav-links li{
+    padding: 10px 20px;
+}
 .home-container p {
     font-size: 20px;
     margin-bottom: 50px;
@@ -56,4 +74,7 @@ button:hover {
 button:active {
     box-shadow: none;
     transform: translateY(0);
+}
+.active{
+    background-color: #0056b3;
 }
