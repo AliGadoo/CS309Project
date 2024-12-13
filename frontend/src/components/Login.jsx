@@ -70,7 +70,7 @@ const Login = ({ setUser }) => {
         </button>
         {}
         <p className="signup">
-          Don't have an account? <Link to="/signup"><button>Sign up</button> </Link>
+          Don't have an account? <br /> <Link to="/signup"><button>Sign up</button></Link>
         </p>
       </form>
     </div>

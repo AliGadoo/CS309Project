@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = ({ setUser }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Signup = ({ setUser }) => {
   const handleSignup = (e) => {
     e.preventDefault();
     const user = { name, email, password };
-    fetch('http://localhost:5000/signup', {
+    fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -21,7 +21,7 @@ const Signup = ({ setUser }) => {
         if (data) {
           localStorage.setItem("currentUser", JSON.stringify(data));
           setUser(data);
-          navigate('/');
+          navigate("/");
         } else {
           console.error("Error: Response is empty or invalid.");
         }
@@ -30,36 +30,52 @@ const Signup = ({ setUser }) => {
         console.error("Error during signup:", error);
       });
   };
-  
 
   return (
-    <div className="sign-up-container">
-      <h2>Signup</h2>
+    <div className="login-container">
+      <h2>Sign up</h2>
       <form>
-        <label>Name</label>
-        <input 
-          type="text" 
-          required 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label>Email</label>
-        <input 
-          type="email" 
-          required 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label>Password</label>
-        <input 
-          type="password" 
-          required 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="login-box">
+          <input
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label>Name</label>
+        </div>
+        <div className="login-box">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label>Email</label>
+        </div>
+        <div className="login-box">
+          <input
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label>Password</label>
+        </div>
         <div>
-          <button onClick={handleSignup}>Signup</button>
-          <Link to="/login"><p>already have account</p></Link>
+          <button onClick={handleSignup}>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            Sign up
+          </button>
+          <p>already have account 
+          <Link to="/login">
+          <br />
+            <button >Sign in</button>
+          </Link>
+          </p>
         </div>
       </form>
     </div>

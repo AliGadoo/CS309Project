@@ -86,6 +86,7 @@ form {
 .login-container p {
     color: #fff;
     font-size: 20px;
+    text-align: center;
 }
 
 .login-container a {
