@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
+const Cart = require("./models/cart.model");
 const mongodbURL = "mongodb://localhost:27017/CS309Project";
 
 const app = express();
@@ -225,6 +226,35 @@ app.patch(`/editProduct/:id`, async (req, res) => {
     await Product.updateOne({ _id: id }, { $set: updates });
     const updatedProduct = await Product.findById(id);
     res.json({ success: true, product: updatedProduct });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
+app.post(`/pushInCart`, async (req, res) => {
+  try {
+    const { userID, productID, count } = req.body;
+    if (!userID || !productID || !count) {
+      return res.json({ success: false, message: "Invalid input" });
+    }
+    const product = await Product.findById(productID);
+    if (!product) {
+      return res.json({ success: false, message: "Product not found" });
+    }
+    const stock = product.stock;
+    if (count > stock) {
+      return res.json({
+        success: false,
+        message: "your order mount exceeds stock",
+      });
+    }
+    let cart = await Cart.findOne({ userID });
+    if (!cart) {
+      cart = new Cart({ userID, products: [] });
+    }
+    cart.products.push({ productID, count });
+    await cart.save();
+    return res.json({ success: true, cart });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
   }
