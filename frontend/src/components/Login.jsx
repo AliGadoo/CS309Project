@@ -25,7 +25,7 @@ const Login = ({ setUser }) => {
           setIsValid(true);
           navigate(-1);
         } else {
-          setIsValid(false); 
+          setIsValid(false);
         }
       })
       .catch((error) => {
@@ -35,44 +35,50 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form>
-        <div className="login-box">
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label htmlFor="email">Email:</label>
-        </div>
-        <div className="login-box">
-          <input
-            type="password"
-            required
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label htmlFor="password">Password:</label>
-        </div>
-        <button type="submit" onClick={handleLogin}>
-          <span className="position-absolute d-block"></span>
-          <span className="position-absolute d-block"></span>
-          <span className="position-absolute d-block"></span>
-          <span className="position-absolute d-block"></span>
-          Login
-        </button>
-        {!isValid && (
-          <p className="error-message" style={{ color: "red" }}>
-            The user is not valid. Please check your email and password.
+    <div className="ground">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form>
+          <div className="login-box">
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label htmlFor="email">Email:</label>
+          </div>
+          <div className="login-box">
+            <input
+              type="password"
+              required
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label htmlFor="password">Password:</label>
+          </div>
+          <button type="submit" onClick={handleLogin}>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            <span className="position-absolute d-block"></span>
+            Login
+          </button>
+          {!isValid && (
+            <p className="error-message" style={{ color: "red" }}>
+              The user is not valid. Please check your email and password.
+            </p>
+          )}
+          <p className="signup">
+            Don't have an account?{" "}
+            <br />
+            <Link to="/signup">
+              <button>Sign up</button>
+            </Link>
           </p>
-        )}
-        <p className="signup">
-          Don't have an account? <Link to="/signup"><button>Sign up</button></Link>
-        </p>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

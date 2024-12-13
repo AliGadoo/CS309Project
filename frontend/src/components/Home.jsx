@@ -8,14 +8,13 @@ const Home = () => {
       <div className="nav">
         <div className="con666">
           <div className="cu-logo">
-            <h1>
-              Home
-            </h1>
+            <h1><i class="fa-solid fa-cart-shopping"></i></h1>
+            
           </div>
           <div className="nav-links" id="demo">
             <ul>
-            <li className="e">
-                  <button className="active">Home</button>
+              <li className="e">
+                <button className="active">Home</button>
               </li>
               <li className="e">
                 <Link to="/login">
@@ -28,14 +27,13 @@ const Home = () => {
                 </Link>{" "}
               </li>
               <li className="e">
-              <button>Gallry</button>
+                <button>Gallry</button>
               </li>
             </ul>
           </div>
         </div>
       </div>
 
-  
       <ProductList />
     </div>
   );

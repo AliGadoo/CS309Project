@@ -32,52 +32,55 @@ const Signup = ({ setUser }) => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Sign up</h2>
-      <form>
-        <div className="login-box">
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <label>Name</label>
-        </div>
-        <div className="login-box">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label>Email</label>
-        </div>
-        <div className="login-box">
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label>Password</label>
-        </div>
-        <div>
-          <button onClick={handleSignup}>
-            <span className="position-absolute d-block"></span>
-            <span className="position-absolute d-block"></span>
-            <span className="position-absolute d-block"></span>
-            <span className="position-absolute d-block"></span>
-            Sign up
-          </button>
-          <p>already have account 
-          <Link to="/login">
-          <br />
-            <button >Sign in</button>
-          </Link>
-          </p>
-        </div>
-      </form>
+    <div className="ground">
+      <div className="login-container">
+        <h2>Sign up</h2>
+        <form>
+          <div className="login-box">
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <label>Name</label>
+          </div>
+          <div className="login-box">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label>Email</label>
+          </div>
+          <div className="login-box">
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label>Password</label>
+          </div>
+          <div>
+            <button onClick={handleSignup}>
+              <span className="position-absolute d-block"></span>
+              <span className="position-absolute d-block"></span>
+              <span className="position-absolute d-block"></span>
+              <span className="position-absolute d-block"></span>
+              Sign up
+            </button>
+            <p>
+              already have account
+              <Link to="/login">
+                <br />
+                <button>Sign in</button>
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
