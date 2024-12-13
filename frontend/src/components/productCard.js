@@ -1,18 +1,25 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import './ProductCard.css'; 
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./ProductCard.css";
 
 function ProductCard(props) {
   const { product } = props;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleOrderNow = () => {
-    navigate('/login'); 
+    navigate("/login");
   };
 
   return (
     <div className="card">
-      <img src={product.image} className="card-img" alt={product.title} />
+      <img
+        src={product.image}
+        className="card-img"
+        alt={product.title}
+        onError={(e) => {
+          e.target.src = "/default-product-img.png";
+        }}
+      />
       <div className="card-body">
         <h5 className="card-title">{product.title}</h5>
         <p className="card-text">{product.description}</p>
@@ -25,4 +32,3 @@ function ProductCard(props) {
 }
 
 export default ProductCard;
-
