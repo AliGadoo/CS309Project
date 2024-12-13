@@ -178,6 +178,22 @@ app.get(`/product/:id`, async (req, res) => {
   }
 });
 
+app.get(`/products/:category`, async (req, res) => {
+  try {
+    const { category } = req.params;
+    const products = await Product.find({ category: category });
+    if (!products.length) {
+      return res.json({
+        success: false,
+        message: "there is no products with this category",
+      });
+    }
+    res.json({ success: true, products: products });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
 app.delete(`/product/:id`, async (req, res) => {
   try {
     const { id } = req.params;
