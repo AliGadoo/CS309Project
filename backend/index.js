@@ -260,6 +260,32 @@ app.post(`/pushInCart`, async (req, res) => {
   }
 });
 
+app.delete(`/deleteFromCart`, async (req, res) => {
+  try {
+    const { userID, productID } = req.body;
+    if (!userID || !productID) {
+      return res.json({ success: false, message: "Invalid input" });
+    }
+    const cart = await Cart.findOne({ userID });
+    if (!cart) {
+      return res.json({ success: false, message: "Cart not found" });
+    }
+    const updatedProducts = cart.products.filter(
+      (product) => product.productID.toString() !== productID
+    );
+    if (updatedProducts.length === cart.products.length) {
+      return res.json({ success: false, message: "Product not found in cart" });
+    }
+    cart.products = updatedProducts;
+    await cart.save();
+
+    return res.json({ success: true, cart });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, message: "Something went wrong" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("hello world");
 });
