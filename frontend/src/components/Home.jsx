@@ -10,9 +10,9 @@ const Home = () => {
       <div className="nav">
         <div className="con666">
           <div className="cu-logo">
-            <h1><i class="fa-solid fa-cart-shopping"></i></h1>   
+            <h1><i className="fa-solid fa-cart-shopping"></i></h1>   
           </div>
-          <i class="fa-solid fa-bars edit2" id="press"></i>
+          <i className="fa-solid fa-bars edit2" id="press"></i>
           <div className="nav-links" id="demo">
             <ul>
               <li className="e">
