@@ -242,17 +242,32 @@ app.post(`/pushInCart`, async (req, res) => {
       return res.json({ success: false, message: "Product not found" });
     }
     const stock = product.stock;
-    if (count > stock) {
-      return res.json({
-        success: false,
-        message: "your order mount exceeds stock",
-      });
-    }
     let cart = await Cart.findOne({ userID });
     if (!cart) {
       cart = new Cart({ userID, products: [] });
     }
-    cart.products.push({ productID, count });
+
+    const existingProduct = cart.products.find(
+      (item) => item.productID.toString() === productID
+    );
+
+    if (existingProduct) {
+      if (existingProduct.count + count > stock) {
+        return res.json({
+          success: false,
+          message: "your order mount exceeds stock",
+        });
+      }
+      existingProduct.count += count;
+    } else {
+      if (count > stock) {
+        return res.json({
+          success: false,
+          message: "your order mount exceeds stock",
+        });
+      }
+      cart.products.push({ productID, count });
+    }
     await cart.save();
     return res.json({ success: true, cart });
   } catch (err) {
