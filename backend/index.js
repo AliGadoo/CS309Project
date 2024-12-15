@@ -299,7 +299,32 @@ app.delete(`/deleteFromCart`, async (req, res) => {
     console.error(err);
     return res.json({ success: false, message: "Something went wrong" });
   }
-});
+}); 
+
+  // get all cart products for specific usrer id // 
+  
+  app.get("/getCart/:userID", async (req, res) => {
+    try {
+      const userID = req.params.userID;
+      const cart = await Cart.findOne({ userID }) ;
+
+      const productsID = cart.products.map((product) => product.productID);  
+
+      const products =  productsID.map(async (productID) =>{
+        const product = await Product.findById(productID);
+        return product ;
+      }) 
+
+     res.json({ success: true, products: await Promise.all(products) });
+
+ 
+    } catch (err) {
+         return res.json({ success: false, message: "something went wrong" });
+    }
+  });
+  
+ 
+
 
 app.get("/", (req, res) => {
   res.send("hello world");

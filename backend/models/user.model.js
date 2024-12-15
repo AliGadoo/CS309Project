@@ -29,7 +29,7 @@ const userSchema = new Schema(
     phone: {
       type: String,
       required: false,
-    },
+    },  
   },
   { timestamps: true }
 );
