@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import OrderPage from './components/OrderPage'; // استيراد صفحة Order
+import Layout from './components/layout';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -28,10 +29,12 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route element={<Home />} path="/" />
-          <Route path="/signup" element={<Signup setUser={setCurrentUser} />} />
-          <Route path="/login" element={<Login setUser={setCurrentUser} />} />
-          <Route path="/order" element={<OrderPage />} /> 
+          <Route path="/" element={<Layout />}  >
+            <Route index element={<Home />} />
+            <Route path="/signup" element={<Signup setUser={setCurrentUser} />} />
+            <Route path="/login" element={<Login setUser={setCurrentUser} />} />
+            <Route path="/order" element={<OrderPage />} />
+          </Route>
         </Routes>
       </div>
     </Router>
