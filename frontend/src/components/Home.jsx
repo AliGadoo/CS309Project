@@ -7,35 +7,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <div className="nav">
-        <div className="con666">
-          <div className="cu-logo">
-            <h1><i className="fa-solid fa-cart-shopping"></i></h1>   
-          </div>
-          <i className="fa-solid fa-bars edit2" id="press"></i>
-          <div className="nav-links" id="demo">
-            <ul>
-              <li className="e">
-                <button className="active">Home</button>
-              </li>
-              <li className="e">
-                <Link to="/login">
-                  <button>Login</button>
-                </Link>{" "}
-              </li>
-              <li className="e">
-                <Link to="/signup">
-                  <button>Signup</button>
-                </Link>{" "}
-              </li>
-              <li className="e">
-                <button>Gallry</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
+      <h1>Home Page</h1>
       <ProductList />
     </div>
   );
