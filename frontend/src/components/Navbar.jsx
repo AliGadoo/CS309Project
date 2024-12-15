@@ -13,7 +13,7 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="nav-container">
 
-                <i className="fa-solid fa-bars edit2" id="press" onClick={handleToggle}></i>
+                <i className={isNavOpen ? "fa-solid fa-times edit2" : "fa-solid fa-bars edit2"} id="press" onClick={handleToggle}></i>
 
                 <h1><i className="fa-solid fa-cart-shopping"></i></h1>
                 <div className={isNavOpen ? "nav-links open" : "nav-links"}>
