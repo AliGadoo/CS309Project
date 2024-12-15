@@ -2,9 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
+
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
 const Cart = require("./models/cart.model");
+const Order = require("./models/order.model");
+
 const mongodbURL = "mongodb://localhost:27017/CS309Project";
 
 const app = express();
@@ -299,50 +302,96 @@ app.delete(`/deleteFromCart`, async (req, res) => {
     console.error(err);
     return res.json({ success: false, message: "Something went wrong" });
   }
-}); 
+});
 
-  // get all cart products for specific usrer id // 
-  
-  app.get("/getCart/:userID", async (req, res) => {
-    try {
-      const userID = req.params.userID;
-      const cart = await Cart.findOne({ userID }) ;
+// get all cart products for specific usrer id //
 
-      if(!cart){
-        return res.json({ success: false, message: "there is no cart for this user" });
-      } 
-   
+app.get("/getCart/:userID", async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const cart = await Cart.findOne({ userID });
 
-      const productsID = cart.products.map((product) => product.productID);  
-       
-      if(!productsID.length){
-        return res.json({ success: false, message: "there is no products in this cart" });
-      }
-      const products =  productsID.map(async (productID) =>{
-        const product = await Product.findById(productID);
-        return product ;
-      }) 
-
-      if(!products.length){
-        return res.json({ success: false, message: "there is no products in this cart" });
-      }
-     
-
-     res.json({ success: true, products: await Promise.all(products) });
-
- 
-    } catch (err) {
-         return res.json({ success: false, message: "something went wrong" });
+    if (!cart) {
+      return res.json({
+        success: false,
+        message: "there is no cart for this user",
+      });
     }
-  }); 
 
+    const productsID = cart.products.map((product) => product.productID);
 
-   
+    if (!productsID.length) {
+      return res.json({
+        success: false,
+        message: "there is no products in this cart",
+      });
+    }
+    const products = productsID.map(async (productID) => {
+      const product = await Product.findById(productID);
+      return product;
+    });
 
+    if (!products.length) {
+      return res.json({
+        success: false,
+        message: "there is no products in this cart",
+      });
+    }
 
-  
- 
+    res.json({ success: true, products: await Promise.all(products) });
+  } catch (err) {
+    return res.json({ success: false, message: "something went wrong" });
+  }
+});
 
+app.post(`/order`, async (req, res) => {
+  try {
+    const { userID } = req.body;
+    if (!userID) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    const userCart = await Cart.findOne({ userID });
+    if (!userCart) {
+      return res.json({ success: false, message: "Cart not found" });
+    }
+    const productINFO = userCart.products;
+    if (!productINFO.length) {
+      return res.json({ success: false, message: "Cart is empty" });
+    }
+
+    const productsIDs = productINFO.map((item) => item.productID);
+    const products = await Product.find({ _id: { $in: productsIDs } });
+
+    let totalPrice = 0;
+    productINFO.forEach((item) => {
+      const product = products.find(
+        (product) => product._id.toString() === item.productID.toString()
+      );
+      if (product) {
+        totalPrice += product.price * item.count;
+      }
+    });
+
+    const order = new Order({
+      userID,
+      products: productINFO,
+      status: "pending",
+      totalPrice,
+    });
+
+    await order.save();
+    await Cart.deleteOne({ userID });
+
+    return res.json({
+      success: true,
+      message: "Order in the way",
+      order: order,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, message: "Something went wrong" });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("hello world");
