@@ -308,12 +308,25 @@ app.delete(`/deleteFromCart`, async (req, res) => {
       const userID = req.params.userID;
       const cart = await Cart.findOne({ userID }) ;
 
-      const productsID = cart.products.map((product) => product.productID);  
+      if(!cart){
+        return res.json({ success: false, message: "there is no cart for this user" });
+      } 
+   
 
+      const productsID = cart.products.map((product) => product.productID);  
+       
+      if(!productsID.length){
+        return res.json({ success: false, message: "there is no products in this cart" });
+      }
       const products =  productsID.map(async (productID) =>{
         const product = await Product.findById(productID);
         return product ;
       }) 
+
+      if(!products.length){
+        return res.json({ success: false, message: "there is no products in this cart" });
+      }
+     
 
      res.json({ success: true, products: await Promise.all(products) });
 
@@ -321,7 +334,12 @@ app.delete(`/deleteFromCart`, async (req, res) => {
     } catch (err) {
          return res.json({ success: false, message: "something went wrong" });
     }
-  });
+  }); 
+
+
+   
+
+
   
  
 
