@@ -391,8 +391,56 @@ app.post(`/order`, async (req, res) => {
     console.error(err);
     return res.json({ success: false, message: "Something went wrong" });
   }
+}); 
+
+ // uppate count of product in cart // 
+ app.put('/updateCount', async (req, res) => {
+  try {
+    const { userID, productID, newCount } = req.body;
+    if (!productID || !userID) {
+      return res.json({ success: false, message: "Invalid input" });
+    }
+
+    const cart = await Cart.findOne({ userID });
+
+
+   
+    if (!cart) {
+      return res.json({ success: false, message: "Cart not found" });
+    }
+    if (!cart.products || cart.products.length === 0) { 
+      return res.json({ success: false, message: "No products in cart" }); }
+
+       const product = await Product.findById(productID); 
+       const stock = product.stock;
+
+      if (newCount > stock) { 
+        return res.json({ success: false, message: "Product count exceeds stock" });
+      }
+      if(newCount == 0){
+        return res.json({ success: false, message: "Product count can't be 0" });
+      }
+      
+
+    const updatedProducts = cart.products.map(product => {
+      if (product.productID.toString() === productID) {
+        product.count = newCount;
+      }
+      return product;
+    });
+    cart.products = updatedProducts;
+    
+    await cart.save();
+    return res.json({ success: true, message: "Cart updated successfully" });
+
+  } catch (err) {
+    return res.json({ success: false, message: "Something went wrong", error: err.message });
+  }
 });
 
+
+
+   
 app.get("/", (req, res) => {
   res.send("hello world");
 });
