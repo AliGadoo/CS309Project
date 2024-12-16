@@ -7,6 +7,7 @@ const Signup = ({ setUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
   const [errorMessage , setErrorMessage] = useState("");
 
   const handleSignup = (e) => {
@@ -26,7 +27,12 @@ const Signup = ({ setUser }) => {
       setIsValid(false);
       return;
     }
-    const user = { name, email, password };
+    if (address.trim() === "") {
+      setErrorMessage("address cannot be empty");
+      setIsValid(false);
+      return;
+    }
+    const user = { name, email, password , address};
     fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -81,6 +87,15 @@ const Signup = ({ setUser }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <label>Password</label>
+            <div className="login-box">
+            <input
+              type="text"
+              required
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            <label>Address</label>
+            </div>
           </div>
           <div>
             <button onClick={handleSignup}>

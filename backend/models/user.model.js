@@ -21,6 +21,7 @@ const userSchema = new Schema(
     },
     address: {
       type: String,
+      required: true,
     },
     image: {
       type: String,
@@ -29,7 +30,7 @@ const userSchema = new Schema(
     phone: {
       type: String,
       required: false,
-    },  
+    },
   },
   { timestamps: true }
 );
