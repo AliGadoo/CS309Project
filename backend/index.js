@@ -456,7 +456,7 @@ app.post(`/order`, async (req, res) => {
   }
 });
 
-app.get(`/order/:id`, async (req, res) => {
+app.get(`/userOrder/:id`, async (req, res) => {
   try {
     const { id } = req.params;
     const orders = await Order.find({ userID: id });
@@ -464,6 +464,18 @@ app.get(`/order/:id`, async (req, res) => {
       return res.json({ success: false, message: "there are no orders yet" });
     }
     res.json({ success: true, orders });
+  } catch (err) {
+    return res.json({ success: false, message: "Something went wrong" });
+  }
+});
+
+app.get(`/allOrders`, async (req, res) => {
+  try {
+    const allOrders = await Order.find();
+    if (!allOrders.length) {
+      return res.json({ success: false, message: "there are no orders yet" });
+    }
+    res.json(allOrders);
   } catch (err) {
     return res.json({ success: false, message: "Something went wrong" });
   }
