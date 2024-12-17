@@ -441,7 +441,19 @@ app.post(`/order`, async (req, res) => {
       order: order,
     });
   } catch (err) {
-    console.error(err);
+    return res.json({ success: false, message: "Something went wrong" });
+  }
+});
+
+app.get(`/order/:id`, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const orders = await Order.find({ userID: id });
+    if (!orders) {
+      return res.json({ success: false, message: "there are no orders yet" });
+    }
+    res.json({ success: true, orders });
+  } catch (err) {
     return res.json({ success: false, message: "Something went wrong" });
   }
 });
