@@ -137,6 +137,10 @@ app.post("/addProduct", async (req, res) => {
   try {
     const product = new Product(req.body);
 
+    if (updates.stock === 0) {
+      updates.soldOut = true;
+    }
+
     if (await Product.findOne({ name: product.name })) {
       // we will add logic if this product exist add 1 more on the stock of this product
     }
@@ -221,6 +225,10 @@ app.patch(`/editProduct/:id`, async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
+    if (updates.stock === 0) {
+      updates.soldOut = true;
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.json({ success: false, message: "Invalid product ID" });
     }
@@ -242,6 +250,9 @@ app.post(`/pushInCart`, async (req, res) => {
     const product = await Product.findById(productID);
     if (!product) {
       return res.json({ success: false, message: "Product not found" });
+    }
+    if (product.soldOut) {
+      return res.json({ success: false, message: "Product out of stock" });
     }
     const stock = product.stock;
     const user = await User.findById(userID);

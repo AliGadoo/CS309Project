@@ -28,6 +28,10 @@ const productSchema = new Schema(
     category: {
       type: String,
     },
+    soldOut: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
