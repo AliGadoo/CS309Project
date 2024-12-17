@@ -137,8 +137,8 @@ app.post("/addProduct", async (req, res) => {
   try {
     const product = new Product(req.body);
 
-    if (updates.stock === 0) {
-      updates.soldOut = true;
+    if (product.stock === 0) {
+      product.soldOut = true;
     }
 
     if (await Product.findOne({ name: product.name })) {
@@ -150,7 +150,11 @@ app.post("/addProduct", async (req, res) => {
       message: "product added successfully",
     });
   } catch (err) {
-    return res.json({ success: false, message: "something went wrong" });
+    return res.json({
+      success: false,
+      message: "something went wrong",
+      err: err.message,
+    });
   }
 });
 
@@ -478,6 +482,85 @@ app.get(`/allOrders`, async (req, res) => {
     res.json(allOrders);
   } catch (err) {
     return res.json({ success: false, message: "Something went wrong" });
+  }
+});
+
+app.get(`/order/:id`, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "there is no order with this id",
+      });
+    }
+    res.json({ success: true, order });
+  } catch (err) {
+    return res.json({ success: false, message: "Something went wrong" });
+  }
+});
+
+app.patch(`/acceptOrder/:orderID`, async (req, res) => {
+  try {
+    const { orderID } = req.params;
+    const order = await Order.findById(orderID);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "there is no order with this id",
+      });
+    }
+    const productINFO = order.products;
+
+    const productsIDs = productINFO.map((item) => item.productID);
+    const products = await Product.find({ _id: { $in: productsIDs } });
+
+    for (const item of productINFO) {
+      const product = products.find(
+        (product) => product._id.toString() === item.productID.toString()
+      );
+      if (product.soldOut) {
+        return res.json({
+          success: false,
+          message: "this product is sold out and cannot be accepted",
+        });
+      }
+      if (product) {
+        product.stock -= item.count;
+        order.status = "accepted";
+        if (product.stock === 0) product.soldOut = true;
+        await product.save();
+      }
+    }
+    await order.save();
+    res.json({ success: true, message: "Order accepted", products });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+});
+
+app.patch(`/rejectOrder/:orderID`, async (req, res) => {
+  try {
+    const { orderID } = req.params;
+    const order = await Order.findById(orderID);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "there is no order with this id",
+      });
+    }
+    order.status = "rejected";
+    await order.save();
+    res.json({ success: true, message: "Order rejected" });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+    });
   }
 });
 
