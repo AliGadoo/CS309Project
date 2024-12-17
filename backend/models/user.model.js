@@ -31,6 +31,15 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    cart: [
+      {
+        productID: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+        },
+        count: { type: Number, required: true, default: 1 },
+      },
+    ],
   },
   { timestamps: true }
 );

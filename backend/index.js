@@ -5,7 +5,6 @@ const cors = require("cors");
 
 const User = require("./models/user.model");
 const Product = require("./models/product.model");
-const Cart = require("./models/cart.model");
 const Order = require("./models/order.model");
 
 const mongodbURL = "mongodb://localhost:27017/CS309Project";
@@ -245,12 +244,11 @@ app.post(`/pushInCart`, async (req, res) => {
       return res.json({ success: false, message: "Product not found" });
     }
     const stock = product.stock;
-    let cart = await Cart.findOne({ userID });
-    if (!cart) {
-      cart = new Cart({ userID, products: [] });
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
     }
-
-    const existingProduct = cart.products.find(
+    const existingProduct = user.cart.find(
       (item) => item.productID.toString() === productID
     );
 
@@ -258,7 +256,7 @@ app.post(`/pushInCart`, async (req, res) => {
       if (existingProduct.count + count > stock) {
         return res.json({
           success: false,
-          message: "your order mount exceeds stock",
+          message: "Your order amount exceeds stock",
         });
       }
       existingProduct.count += count;
@@ -266,15 +264,16 @@ app.post(`/pushInCart`, async (req, res) => {
       if (count > stock) {
         return res.json({
           success: false,
-          message: "your order mount exceeds stock",
+          message: "Your order amount exceeds stock",
         });
       }
-      cart.products.push({ productID, count });
+      user.cart.push({ productID, count });
     }
-    await cart.save();
-    return res.json({ success: true, cart });
+    await user.save();
+    return res.json({ success: true, cart: user.cart });
   } catch (err) {
-    return res.json({ success: false, message: "something went wrong" });
+    console.error(err);
+    return res.json({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -284,63 +283,115 @@ app.delete(`/deleteFromCart`, async (req, res) => {
     if (!userID || !productID) {
       return res.json({ success: false, message: "Invalid input" });
     }
-    const cart = await Cart.findOne({ userID });
-    if (!cart) {
-      return res.json({ success: false, message: "Cart not found" });
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
     }
-    const updatedProducts = cart.products.filter(
+
+    const updatedCart = user.cart.filter(
       (product) => product.productID.toString() !== productID
     );
-    if (updatedProducts.length === cart.products.length) {
-      return res.json({ success: false, message: "Product not found in cart" });
-    }
-    cart.products = updatedProducts;
-    await cart.save();
 
-    return res.json({ success: true, cart });
+    if (updatedCart.length === user.cart.length) {
+      return res.json({
+        success: false,
+        message: "Product not found in cart",
+      });
+    }
+    user.cart = updatedCart;
+    await user.save();
+    return res.json({
+      success: true,
+      message: "Product removed from cart",
+      cart: user.cart,
+    });
   } catch (err) {
     console.error(err);
     return res.json({ success: false, message: "Something went wrong" });
   }
 });
 
-// get all cart products for specific usrer id //
-
 app.get("/getCart/:userID", async (req, res) => {
   try {
     const userID = req.params.userID;
-    const cart = await Cart.findOne({ userID });
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.json({ success: false, message: "no user found" });
+    }
+    const cart = user.cart;
 
-    if (!cart) {
+    if (!cart.length) {
       return res.json({
         success: false,
         message: "there is no cart for this user",
       });
     }
-
-    const productsID = cart.products.map((product) => product.productID);
-
-    if (!productsID.length) {
-      return res.json({
-        success: false,
-        message: "there is no products in this cart",
-      });
-    }
-    const products = productsID.map(async (productID) => {
-      const product = await Product.findById(productID);
-      return product;
-    });
-
-    if (!products.length) {
-      return res.json({
-        success: false,
-        message: "there is no products in this cart",
-      });
-    }
-
-    res.json({ success: true, products: await Promise.all(products) });
+    res.json({ success: true, cart });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
+  }
+});
+
+app.put("/updateCount", async (req, res) => {
+  try {
+    const { userID, productID, newCount } = req.body;
+    if (!productID || !userID) {
+      return res.json({ success: false, message: "Invalid input" });
+    }
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.json({ success: false, message: "user not found" });
+    }
+    const userCart = user.cart;
+    if (!userCart) {
+      return res.json({ success: false, message: "Cart not found" });
+    }
+    if (!user.cart || user.cart.length === 0) {
+      return res.json({ success: false, message: "No products in cart" });
+    }
+
+    const product = await Product.findById(productID);
+    const stock = product.stock;
+
+    if (newCount > stock) {
+      return res.json({
+        success: false,
+        message: "Product count exceeds stock",
+      });
+    }
+    if (newCount <= 0) {
+      return res.json({
+        success: false,
+        message: "Product count can't be less than 0",
+      });
+    }
+
+    let isProductFound = false;
+
+    user.cart = user.cart.map((item) => {
+      if (item.productID.toString() === productID) {
+        item.count = newCount;
+        isProductFound = true;
+      }
+      return item;
+    });
+
+    if (!isProductFound) {
+      return res.json({ success: false, message: "product not found" });
+    }
+
+    await user.save();
+    return res.json({
+      success: true,
+      message: "Cart updated successfully",
+      cart: user.cart,
+    });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+      error: err.message,
+    });
   }
 });
 
@@ -391,56 +442,8 @@ app.post(`/order`, async (req, res) => {
     console.error(err);
     return res.json({ success: false, message: "Something went wrong" });
   }
-}); 
-
- // uppate count of product in cart // 
- app.put('/updateCount', async (req, res) => {
-  try {
-    const { userID, productID, newCount } = req.body;
-    if (!productID || !userID) {
-      return res.json({ success: false, message: "Invalid input" });
-    }
-
-    const cart = await Cart.findOne({ userID });
-
-
-   
-    if (!cart) {
-      return res.json({ success: false, message: "Cart not found" });
-    }
-    if (!cart.products || cart.products.length === 0) { 
-      return res.json({ success: false, message: "No products in cart" }); }
-
-       const product = await Product.findById(productID); 
-       const stock = product.stock;
-
-      if (newCount > stock) { 
-        return res.json({ success: false, message: "Product count exceeds stock" });
-      }
-      if(newCount == 0){
-        return res.json({ success: false, message: "Product count can't be 0" });
-      }
-      
-
-    const updatedProducts = cart.products.map(product => {
-      if (product.productID.toString() === productID) {
-        product.count = newCount;
-      }
-      return product;
-    });
-    cart.products = updatedProducts;
-    
-    await cart.save();
-    return res.json({ success: true, message: "Cart updated successfully" });
-
-  } catch (err) {
-    return res.json({ success: false, message: "Something went wrong", error: err.message });
-  }
 });
 
-
-
-   
 app.get("/", (req, res) => {
   res.send("hello world");
 });
