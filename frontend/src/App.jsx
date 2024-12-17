@@ -5,6 +5,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import OrderPage from './components/OrderPage'; // استيراد صفحة Order
 import Layout from './components/layout';
+import UserProfile from './components/UserProfile';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -34,6 +35,7 @@ function App() {
             <Route path="/signup" element={<Signup setUser={setCurrentUser} />} />
             <Route path="/login" element={<Login setUser={setCurrentUser} />} />
             <Route path="/order" element={<OrderPage />} />
+            <Route path='/userProfile' element={<UserProfile currentUser={currentUser} setUser={setCurrentUser}/>}/>
           </Route>
         </Routes>
       </div>

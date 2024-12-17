@@ -44,7 +44,7 @@ const Signup = ({ setUser }) => {
           localStorage.setItem("currentUser", JSON.stringify(data));
           setUser(data);
           setIsValid(true);
-          navigate(-1);
+          navigate('/');
         } else {
           setIsValid(false);
           setErrorMessage("this email already taken")

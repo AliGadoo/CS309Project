@@ -35,7 +35,7 @@ const Login = ({ setUser }) => {
           localStorage.setItem("currentUser", JSON.stringify(data));
           setUser(data);
           setIsValid(true);
-          navigate(-1);
+          navigate('/');
         } else {
           setIsValid(false);
           setErrorMessage("Please Enter your Email and Password correct")
@@ -48,7 +48,6 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <div className="ground">
       <div className="login-container">
         <h2>Login</h2>
         <form>
@@ -92,7 +91,6 @@ const Login = ({ setUser }) => {
           </p>
         </form>
       </div>
-    </div>
   );
 };
 
