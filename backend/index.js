@@ -390,7 +390,6 @@ app.put("/updateCount", async (req, res) => {
     return res.json({
       success: false,
       message: "Something went wrong",
-      error: err.message,
     });
   }
 });
@@ -401,12 +400,14 @@ app.post(`/order`, async (req, res) => {
     if (!userID) {
       return res.json({ success: false, message: "User not found" });
     }
-    const userCart = await Cart.findOne({ userID });
+    const user = await User.findById(userID);
+
+    const userCart = user.cart;
     if (!userCart) {
       return res.json({ success: false, message: "Cart not found" });
     }
-    const productINFO = userCart.products;
-    if (!productINFO.length) {
+    const productINFO = userCart;
+    if (!productINFO) {
       return res.json({ success: false, message: "Cart is empty" });
     }
 
@@ -431,7 +432,8 @@ app.post(`/order`, async (req, res) => {
     });
 
     await order.save();
-    await Cart.deleteOne({ userID });
+    user.cart = [];
+    await user.save();
 
     return res.json({
       success: true,
