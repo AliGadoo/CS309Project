@@ -564,6 +564,56 @@ app.patch(`/rejectOrder/:orderID`, async (req, res) => {
   }
 });
 
+app.patch(`/cancelOrder/:orderID`, async (req, res) => {
+  try {
+    const { orderID } = req.params;
+    const order = await Order.findById(orderID);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "there is no order with this id",
+      });
+    }
+    order.status = "canceled";
+    await order.save();
+    res.json({ success: true, message: "Order canceled" });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+});
+
+app.delete(`/order/:orderID`, async (req, res) => {
+  try {
+    const { orderID } = req.params;
+    const order = await Order.findById(orderID);
+    if (!order) {
+      return res.json({
+        success: false,
+        message: "there is no order with this id",
+      });
+    }
+    if (order.status === "pending") {
+      return res.json({
+        success: false,
+        message: "cannot delete order in pending status",
+      });
+    }
+    const deletedOrder = await Order.findByIdAndDelete(orderID);
+    if (!deletedOrder) {
+      return res.json({ success: false, message: "order is already deleted" });
+    }
+    res.json({ success: true, message: "order has been deleted" });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("hello world");
 });
