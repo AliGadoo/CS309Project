@@ -1,9 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 import Signup from "./Signup";
+import { useState, useEffect } from "react";
 
-const Profile = ({ currentUser, setUser }) => {
+const UserProfile = ({ currentUser, setUser }) => {
   const navigate = useNavigate();
+  const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+  const activeUser = currentUser || storedUser;
+
+  const { email, name: userName, image: userImage, phone: userPhone, address: userAddress } = activeUser?.user || {};
+
+  const [name, setName] = useState(userName || "");
+  const [image, setImage] = useState(userImage || "");
+  const [phone, setPhone] = useState(userPhone || "");
+  const [address, setAddress] = useState(userAddress || "");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  useEffect(() => {
+    if (activeUser) {
+      localStorage.setItem("currentUser", JSON.stringify(activeUser));
+    }
+  }, [activeUser]);
 
   const handleLogout = () => {
     setUser(null);
@@ -12,56 +30,128 @@ const Profile = ({ currentUser, setUser }) => {
   };
 
   const handleDeleteAccount = () => {
-    alert("Account deleted successfully!");
     setUser(null);
     localStorage.removeItem("currentUser");
+
+    fetch("http://localhost:5000/deleteUser", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => console.log(res.json()))
+      .catch((err) => console.log(err));
+
     navigate("/");
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    if (newPassword && newPassword !== confirmPassword) {
+      console.log("Passwords do not match");
+      return;
+    }
+
+    fetch("http://localhost:5000/updateUser", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        name,
+        image,
+        phone,
+        address,
+        password: newPassword,
+        confirmPassword,
+      }),
+    })
+      .then((res) => {
+        console.log(res.json());
+        console.log("Profile updated successfully!");
+        setUser({
+          ...activeUser,
+          user: { ...activeUser.user, name, image, phone, address },
+        });
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({
+            ...activeUser,
+            user: { ...activeUser.user, name, image, phone, address },
+          })
+        );
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div>
-      {currentUser ? (
+      {activeUser ? (
         <div className="ground">
           <div className="profile-container">
             <div className="profile-header">
               <img
                 className="profile-image"
-                src={currentUser.user.image ? currentUser.user.image : "./default-profile-img.jpg"}
+                src={userImage || "./default-profile-img.jpg"}
                 alt="Profile"
                 onError={(e) => {
                   e.target.src = "./default-profile-img.jpg";
                 }}
               />
               <div>
-                <div className="profile-name">{currentUser.user.name}</div>
-                <div className="profile-email">{currentUser.user.email}</div>
+                <div className="profile-name">{userName}</div>
+                <div className="profile-email">{email}</div>
               </div>
             </div>
 
-            <form>
+            <form onSubmit={handleUpdateProfile}>
               <div className="form-group">
                 <label>Name</label>
-                <input type="text" defaultValue={currentUser.user.name} />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <label>Image</label>
-                <input type="text" defaultValue={currentUser.user.image} />
+                <input
+                  type="text"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <label>Phone</label>
-                <input type="text" defaultValue={currentUser.user.phone} />
+                <input
+                  type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <label>Address</label>
-                <input type="text" defaultValue={currentUser.user.address} />
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
               </div>
               <div className="form-group">
                 <label>New Password</label>
-                <input type="password" placeholder="Enter new password" />
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                />
               </div>
               <div className="form-group">
                 <label>Confirm Password</label>
-                <input type="password" placeholder="Enter new password" />
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm new password"
+                />
               </div>
               <button type="submit" className="btn">
                 Update Profile
@@ -85,4 +175,4 @@ const Profile = ({ currentUser, setUser }) => {
   );
 };
 
-export default Profile;
+export default UserProfile;
