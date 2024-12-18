@@ -71,31 +71,47 @@ button:hover {
 
 .home-container h2 {
     position: relative;
+    color: #Fff;
 }
 
-.home-container h2::after {
-    content: "";
-    background-color: #ff305b;
-    height: 1px;
-    width: 160px;
-    margin: auto;
-    position: absolute;
-    top: 85px;
-    right: 0;
-    left: 0;
-    bottom: 64px;
+.last {
+    position: relative;
+    background-color: black;
+    margin-top: 50px;
+    width: 100%;
+}
+.last1{
+    margin-top: 30px;
+}
+.last1 i {
+    color: white;
+    padding-left: 20px;
+    padding-bottom: 10px;
 }
 
-.home-container h2::before {
-    content: "";
-    margin: auto;
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 27px;
-    border-color: #ff305b;
-    border-style: solid;
-    border-width: 1px 0;
-    padding: 4px 0 5px;
-    width: 70px;
+.last1 a:hover i {
+    color: #03c9f4;
+}
+
+.container {
+
+    text-align: center;
+}
+
+.be {
+
+    color: #ffffff;
+    line-height: 25px;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.last a {
+    text-decoration: none;
+    color: #03c9f4;
+}
+
+.last img:hover img {
+    color: #ff305b;
 }
