@@ -1,6 +1,7 @@
 /* تصميم عام للبطاقة */
 .card {
   width: 300px;
+  display: block;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;

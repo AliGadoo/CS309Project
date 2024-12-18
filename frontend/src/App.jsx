@@ -6,6 +6,7 @@ import Login from './components/Login';
 import OrderPage from './components/OrderPage'; // استيراد صفحة Order
 import Layout from './components/layout';
 import UserProfile from './components/UserProfile';
+import SingleProductPage from './components/SingleProductPage';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,6 +37,7 @@ function App() {
             <Route path="/login" element={<Login setUser={setCurrentUser} />} />
             <Route path="/order" element={<OrderPage />} />
             <Route path='/userProfile' element={<UserProfile currentUser={currentUser} setUser={setCurrentUser}/>}/>
+            <Route path='/product/:id' element={<SingleProductPage/>}/>
           </Route>
         </Routes>
       </div>

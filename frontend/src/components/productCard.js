@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import "./ProductCard.css";
 
 function ProductCard(props) {
@@ -11,7 +11,7 @@ function ProductCard(props) {
   };
 
   return (
-    <div className="card">
+    <Link className="card" to={`/product/${product._id}`} >
       <img
         src={product.image}
         className="card-img"
@@ -27,7 +27,7 @@ function ProductCard(props) {
           Order Now
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
 
