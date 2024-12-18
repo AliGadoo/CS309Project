@@ -19,7 +19,14 @@ const productSchema = new Schema(
       required: true,
     },
     rate: {
-      type: { average: Number, usersCount: Number },
+      average: { type: Number, default: 0 },
+      usersCount: { type: Number, default: 0 },
+      ratings: [
+        {
+          userID: { type: mongoose.Schema.Types.ObjectId },
+          rating: { type: Number, min: 1, max: 5 },
+        },
+      ],
     },
     stock: {
       type: Number,

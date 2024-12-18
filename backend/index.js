@@ -245,6 +245,57 @@ app.patch(`/editProduct/:id`, async (req, res) => {
   }
 });
 
+app.patch(`/product/rate`, async (req, res) => {
+  try {
+    const { productID, userID, rating } = req.body;
+
+    if (!productID || !userID) {
+      return res.json({ success: false, message: "Invalid input" });
+    }
+    if (rating < 1 || rating > 5) {
+      return res.json({
+        success: false,
+        message: "Rating must be a number between 1 and 5",
+      });
+    }
+
+    const product = await Product.findById(productID);
+    if (!product) {
+      return res.json({ success: false, message: "Product not found" });
+    }
+
+    const existingRating = product.rate.ratings.find(
+      (r) => r.userID.toString() === userID
+    );
+    if (existingRating) {
+      existingRating.rating = rating;
+    } else {
+      product.rate.ratings.push({ userID, rating });
+      product.rate.usersCount += 1;
+    }
+
+    const totalRatings = product.rate.ratings.reduce(
+      (sum, r) => sum + r.rating,
+      0
+    );
+    product.rate.average =
+      product.rate.usersCount > 0 ? totalRatings / product.rate.usersCount : 0;
+
+    await product.save();
+    res.json({
+      success: true,
+      message: "Successfully user rated",
+      rate: product.rate,
+    });
+  } catch (err) {
+    return res.json({
+      success: false,
+      message: "Something went wrong",
+      err: err.message,
+    });
+  }
+});
+
 app.post(`/pushInCart`, async (req, res) => {
   try {
     const { userID, productID, count } = req.body;
