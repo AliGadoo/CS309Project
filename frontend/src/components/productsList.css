@@ -5,18 +5,17 @@
 }
 
 .product-item {
-  flex: 1 1 calc(25% - 20px);
+  width: 25%;
   box-sizing: border-box;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  background-color: #fff;
   transition: transform 0.2s;
+  display: flex;
+  justify-content: center;  
 }
 
 .product-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.10);
 }
 .product-item .card-body {
   padding: 15px;
@@ -52,18 +51,22 @@
 .product-item button:hover {
   background-color: #0056b3;
 }
-
+@media (max-width: 1000px) {
+  .product-item {
+    width: 50%;
+  }
+}
+  
 @media (max-width: 768px) {
   .product-item {
-    flex: 1 1 calc(50% - 20px);
+    width: 100%;
+  }
+  .card{
+    width: 435px;
   }
 }
 
-@media (max-width: 480px) {
-  .product-item {
-    flex: 1 1 100%;
-  }
-}
+
 .product-item img {
   width: 100%; 
   height: 200px; 
