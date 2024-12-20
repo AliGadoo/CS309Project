@@ -19,7 +19,7 @@ export default function Navbar() {
                 <div className={isNavOpen ? "nav-links open" : "nav-links"}>
                     <ul >
                         <li>
-                            <Link to="/" className="nav-link">Home</Link>
+                            <Link to="/" className="nav-link active">Home</Link>
                         </li>
                         <li>
                             <Link to="/login" className="nav-link">Login</Link>

@@ -3,7 +3,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-
+.active{
+  color: black !important;
+}
 .product-item {
   width: 25%;
   box-sizing: border-box;
@@ -26,12 +28,16 @@
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: #e8e8e8;
+  padding:10px
+}
+.card-body h4{
+  color: #0056b3 !important;
 }
 
 .product-item .card-text {
   font-size: 0.9rem;
-  color: #666;
+  color: #f9f9f9;
   height: 40px; 
   overflow: hidden;
   text-overflow: ellipsis;

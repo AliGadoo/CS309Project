@@ -21,7 +21,8 @@ function ProductCard(props) {
         }}
       />
       <div className="card-body">
-        <h5 className="card-title">{product.title}</h5>
+        <h5 className="card-title">{product.name}</h5>
+        <h4 className="card-title">${product.price}</h4>
         <p className="card-text">{product.description}</p>
         <button className="card-button" onClick={handleOrderNow}>
           Order Now
