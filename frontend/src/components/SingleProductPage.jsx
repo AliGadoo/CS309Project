@@ -1,32 +1,66 @@
 import { useEffect, useState } from "react";
-import { data, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const SingleProductPage = () => {
+const SingleProductPage = ({ currentUser }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+  const activeUser = currentUser || storedUser;
+  const userId = activeUser.user._id;
+  const [count, setCount] = useState(1);
+
+  const handlePushInCart = () => {
+    fetch(`http://localhost:5000/pushInCart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userID: userId,   
+        productID: id,  
+        count,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Product added to cart:", data);
+        if (data.success) {
+          alert("Product added to cart!");
+        } else {
+          alert(data.message || "Failed to add product to cart");
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+        alert("An error occurred. Please try again.");
+      });
+  };
+
   useEffect(() => {
     fetch(`http://localhost:5000/product/${id}`)
-      .then((Response) => {
-        setIsLoding(true);
-        return Response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         setProduct(data.product);
-        setIsLoding(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error("Error fetching product:", err);
+        setIsLoading(false); 
       });
-  }, []);
+  }, [id]);
+
+  const increaseCount = () => setCount(count + 1);
+  const decreaseCount = () => setCount(count > 1 ? count - 1 : 1);
+
   if (isLoading) {
     return (
-      <div className="looder1">
+      <div className="loader-container">
         <span className="loader"></span>
       </div>
     );
   }
-  console.log(product);
+
   return (
     <div>
       {product && (
@@ -36,10 +70,17 @@ const SingleProductPage = () => {
           </div>
           <div className="card2">
             <h2>{product.name}</h2>
-            <h3>${[product.price]}</h3>
+            <h3>${product.price}</h3>
             <strong>{product.stock} in stock</strong>
             <p>{product.description}</p>
-            <button><i class="fa-solid fa-bag-shopping"></i>add to card</button>
+            <div className="quantity-controls">
+              <button onClick={decreaseCount}>-</button>
+              <span>{count}</span>
+              <button onClick={increaseCount}>+</button>
+            </div>
+            <button onClick={handlePushInCart}>
+              <i className="fa-solid fa-bag-shopping"></i> Add to Cart
+            </button>
           </div>
         </div>
       )}
