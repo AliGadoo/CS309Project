@@ -7,6 +7,8 @@ import OrderPage from "./components/OrderPage";
 import Layout from "./components/layout";
 import UserProfile from "./components/UserProfile";
 import SingleProductPage from "./components/SingleProductPage";
+import AdminProfile from "./components/adminProfile";
+import AddProduct from "./components/AddProduct";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -52,6 +54,8 @@ function App() {
               path="/product/:id"
               element={<SingleProductPage currentUser={currentUser} />}
             />
+            <Route path="/adminProfile" element={<AdminProfile currentUser={currentUser} />}/>
+            <Route path="/addProduct" element={<AddProduct currentUser={currentUser}/>}/>
           </Route>
         </Routes>
       </div>
