@@ -1,21 +1,15 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useEffect } from "react";
-// import Logo from "./Logo";
+import Logo from "./Logo";
 
 export default function Navbar({
   cartItems,
   setFilteredProducts,
   products,
-  currentCategory,
-  categories,
 }) {
   const [isNavOpen, setNavIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(null);
-
-  const handleToggle = () => {
-    setNavIsOpen(!isNavOpen);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -25,25 +19,19 @@ export default function Navbar({
 
   const handleSearch = (e) => {
     const filtered = products.filter((product) => {
-      const matchesCategory =
-        currentCategory === 0
-          ? true
-          : product.category.toLowerCase() ===
-            categories[currentCategory].toLowerCase();
       const searchQuery = e.target.value.toLowerCase();
       const matchesSearchQuery =
         product.name.toLowerCase().includes(searchQuery) ||
-        product.description.toLowerCase().includes(searchQuery) ||
-        product.category.toLowerCase().includes(searchQuery);
+        product.description.toLowerCase().includes(searchQuery)
 
-      return matchesCategory && matchesSearchQuery;
+      return  matchesSearchQuery;
     });
     setFilteredProducts(filtered);
   };
 
   return (
     <nav className="navBar">
-      {/* <Logo /> */}
+      <Logo />
 
       <h1 className="infinity">infinity</h1>
       <div className="wrapper">

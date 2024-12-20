@@ -4,7 +4,6 @@ import "./ProductCard.css";
 import SvgRating from "./SvgRating";
 
 function ProductCard({ product, setCartItems, cartItems }) {
-  console.log(product._id)
   // Custom SVG Rating Component
 
   return (
@@ -32,8 +31,8 @@ function ProductCard({ product, setCartItems, cartItems }) {
             justifyContent: "center",
           }}
         >
-          <SvgRating value={product.rate.average} />
-          <h6>by {product.rate.usersCount} users</h6>
+          <SvgRating value={product.rate?.average} />
+          <h6>by {product.rate?.usersCount} users</h6>
         </div>
         <div
           style={{
