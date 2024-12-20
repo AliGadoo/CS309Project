@@ -281,3 +281,27 @@ a {
     background-color: #FFF;
     color: black;
 }
+.success-message {
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 20px;
+  }
+  
+  .error-message {
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 20px;
+  }
+  
