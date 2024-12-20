@@ -63,13 +63,14 @@ form {
     letter-spacing: 2px;
     font-size: 20px;
     overflow: hidden;
+    padding: 25px;
+    position: relative;
 }
 
 .login-container button:hover {
     background: #03c9f4;
     color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 5px #03c9f4, 0 0 25px #03c9f4, 0 0 50px #03c9f4, 0 0 100px #03c9f4;
     transition: 0.5s;
 }
 
