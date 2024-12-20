@@ -126,10 +126,19 @@ a {
 .card2 button {
     width: 200px !important;
     margin: 0 !important;
+    padding: 10px;
+    background-color: black;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;    
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .card2 button:hover i {
     color: black;
+    transition: 0.3s;
 }
 
 .card2 h2 {
@@ -145,6 +154,12 @@ a {
 }
 
 .card2 strong {
+    color: #fff;
+    padding-top: 10px;
+    padding: 0 20px;
+}
+
+.card2 h4 {
     color: green;
     padding-top: 10px;
 }
@@ -203,7 +218,7 @@ a {
     }
 
     .card2 button {
-        width: 140px !important;
+        width: 140px ;
         margin: 0 !important;
         font-size: 10px;
     }
@@ -223,7 +238,46 @@ a {
         font-size: 7px;
     }
 
-    .card2 strong {
+    .card2 strong,h4 {
         font-size: 10px;
     }
+
+}
+
+@media(max-width: 200px) {
+    .card2 h3 {
+        font-size: 10px;
+    }
+
+    .card2 h2 {
+        font-size: 20px;
+    }
+
+    .card2 p {
+        font-size: 7px;
+    }
+
+    .card2 strong,h4 {
+        font-size: 10px;
+    }
+    .card2 button{
+       width: 200px !important;
+    }
+}
+
+.quantity-controls {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.quantity-controls i {
+   font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 10px;
+}
+
+.card2 button:hover {
+    background-color: #FFF;
+    color: black;
 }

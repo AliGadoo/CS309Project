@@ -71,12 +71,12 @@ const SingleProductPage = ({ currentUser }) => {
           <div className="card2">
             <h2>{product.name}</h2>
             <h3>${product.price}</h3>
-            <strong>{product.stock} in stock</strong>
+            <h4>{product.stock} in stock</h4>
             <p>{product.description}</p>
             <div className="quantity-controls">
-              <button onClick={decreaseCount}>-</button>
-              <span>{count}</span>
-              <button onClick={increaseCount}>+</button>
+             <i class="fa-solid fa-minus" onClick={decreaseCount}></i>
+              <strong>{count}</strong>
+              <i className="fa-solid fa-plus" onClick={increaseCount}></i>
             </div>
             <button onClick={handlePushInCart}>
               <i className="fa-solid fa-bag-shopping"></i> Add to Cart
