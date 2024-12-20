@@ -1,27 +1,64 @@
 import { Link } from "react-router-dom";
 import "./Home.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
+import Navbar from "./Navbar";
+import Categories from "./Categories";
 
-const Home = () => {
-
+const Home = ({ currentUser }) => {
+  const categories = [
+    "AllProducts",
+    "Smartphones",
+    "Laptops",
+    "Tablets",
+    "TVs",
+    "Headphones",
+    "Speakers",
+    "Cameras",
+    "Gaming",
+    "SmartHome",
+    "Accessories",
+  ];
+  const [cartItems, setCartItems] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const api_url = "http://localhost:5000/allProducts";
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+  useEffect(() => {
+    fetch(api_url)
+      .then((res) => res.json())
+      .then((data) => setProducts(data.products));
+  }, []);
   return (
-    <div className="home-container">
-      <ProductList />
-
-
-
-      <div class="last">
-        <div class="container">
-            <div class="last1">
-                <a href="#demo"> <i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#demo"> <i class="fa-brands fa-twitter"></i></a>
-                <a href="#demo"><i class="fa-brands fa-google"></i></a>
-                <a href="#demo"> <i class="fa-brands fa-github"></i></a>
-            </div>
-            <p class="be">Copy Right 2018 © By<a href="#demo">Theme-fair</a> All Rights Reserved</p>
-        </div>
-    </div>
+    <div>
+      <Navbar
+        cartItems={cartItems}
+        setFilteredProducts={setFilteredProducts}
+        products={products}
+        currentCategory={currentCategory}
+        categories={categories}
+      />
+      <Categories
+        setFilteredProducts={setFilteredProducts}
+        categories={categories}
+        currentCategory={currentCategory}
+        products={products}
+        setCurrentCategory={setCurrentCategory}
+      />
+      <ProductList
+        setCartItems={setCartItems}
+        cartItems={cartItems}
+        currentUser={currentUser}
+        products={products}
+        setProducts={setFilteredProducts}
+        filteredProducts={filteredProducts}
+        currentCategory={currentCategory}
+        setCurrentCategory={setCurrentCategory}
+        categories={categories}
+      />
     </div>
   );
 };

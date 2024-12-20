@@ -1,19 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./ProductCard.css";
 import SvgRating from "./SvgRating";
 
 function ProductCard({ product, setCartItems, cartItems }) {
-  const navigate = useNavigate();
-
+  console.log(product._id)
   // Custom SVG Rating Component
 
   return (
-    <div
+    <Link to={`/product/${product._id}`}
       className="card"
-      onClick={() => {
-        navigate(`/product/${product._id}`);
-      }}
+    
     >
       <img
         src={product.image}
@@ -59,7 +56,7 @@ function ProductCard({ product, setCartItems, cartItems }) {
           Add to cart
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
 

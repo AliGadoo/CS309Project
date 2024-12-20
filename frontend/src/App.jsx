@@ -4,7 +4,6 @@ import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import OrderPage from "./components/OrderPage";
-import Layout from "./components/layout";
 import UserProfile from "./components/UserProfile";
 import SingleProductPage from "./components/SingleProductPage";
 import AdminProfile from "./components/adminProfile";
@@ -33,8 +32,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route path='/' element={<Home />} />
             <Route
               path="/signup"
               element={<Signup setUser={setCurrentUser} />}
@@ -56,7 +54,6 @@ function App() {
             />
             <Route path="/adminProfile" element={<AdminProfile currentUser={currentUser} />}/>
             <Route path="/addProduct" element={<AddProduct currentUser={currentUser}/>}/>
-          </Route>
         </Routes>
       </div>
     </Router>

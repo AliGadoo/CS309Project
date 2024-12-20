@@ -1,0 +1,24 @@
+.category{
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.category:hover{
+  background-color: lightgray;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+.categories{
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  overflow-x: auto;
+      scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 10px;
+    height: fit-content;
+}
