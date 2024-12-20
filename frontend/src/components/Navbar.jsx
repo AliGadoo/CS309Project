@@ -11,8 +11,9 @@ export default function Navbar({
 }) {
 
     const storedUser = JSON.parse(localStorage.getItem("currentUser"));
-    const activeUser = currentUser || storedUser;
-    const isLoggedIn = activeUser && activeUser.user;
+    const activeUser = currentUser || (storedUser && JSON.parse(storedUser));
+    const isLoggedIn = Boolean(activeUser?.user);
+
     const navigate = useNavigate();
 
   const [isNavOpen, setNavIsOpen] = useState(false);
@@ -56,12 +57,12 @@ export default function Navbar({
       <Logo />
 
       <h1 className="infinity">infinity</h1>
-      {activeUser.user.isAdmin ?
+      {activeUser?.user?.isAdmin ?
        <div className="admin-panel">
         <Link to={'/addProduct'}>add product</Link>
        </div>
        :<div className="wrapper">
-        <img onClick={handleClickProfile} src={activeUser.user.image || "/default-profile-img.jpg"} className="anonymous" alt="profile"
+        <img onClick={handleClickProfile} src={activeUser?.user?.image  || "/default-profile-img.jpg"} className="anonymous" alt="profile"
             onError={(e) => {
               e.target.src = "./default-profile-img.jpg";
             }}
