@@ -9,6 +9,8 @@ const SingleProductPage = ({ currentUser }) => {
   const activeUser = currentUser || storedUser;
   const userId = activeUser.user._id;
   const [count, setCount] = useState(1);
+  const [successMessage, setSuccessMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const handlePushInCart = () => {
     fetch(`http://localhost:5000/pushInCart`, {
@@ -26,14 +28,17 @@ const SingleProductPage = ({ currentUser }) => {
       .then((data) => {
         console.log("Product added to cart:", data);
         if (data.success) {
-          alert("Product added to cart!");
+          setSuccessMessage("Product added to cart!"); 
+          setTimeout(() => setSuccessMessage(""), 2000); 
         } else {
-          alert(data.message || "Failed to add product to cart");
+          setErrorMessage(data.message || "Failed to add product to cart"); 
+          setTimeout(() => setErrorMessage(""), 2000); 
         }
       })
       .catch((error) => {
         console.error("Error adding to cart:", error);
-        alert("An error occurred. Please try again.");
+        setErrorMessage("An error occurred. Please try again."); 
+        setTimeout(() => setErrorMessage(""), 2000); 
       });
   };
 
@@ -63,6 +68,10 @@ const SingleProductPage = ({ currentUser }) => {
 
   return (
     <div>
+      {}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      
       {product && (
         <div className="container1">
           <div className="card1">
@@ -74,7 +83,7 @@ const SingleProductPage = ({ currentUser }) => {
             <h4>{product.stock} in stock</h4>
             <p>{product.description}</p>
             <div className="quantity-controls">
-             <i class="fa-solid fa-minus" onClick={decreaseCount}></i>
+              <i className="fa-solid fa-minus" onClick={decreaseCount}></i>
               <strong>{count}</strong>
               <i className="fa-solid fa-plus" onClick={increaseCount}></i>
             </div>
