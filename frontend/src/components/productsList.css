@@ -4,7 +4,8 @@
   flex-wrap: wrap;
   justify-content: center;
   overflow-y: auto;
-  height: calc(100vh - 100px);
+  padding-top: 100px;
+  /* height: calc(100vh - 100px); */
 }
 
 

@@ -35,7 +35,7 @@ export default function Navbar({
 
       <h1 className="infinity">infinity</h1>
       <div className="wrapper">
-        <img src="/anonymousImage.png" className="anonymous" />
+        <img src={'default-profile-img.jpg'} className="anonymous" />
         <img src="/shoppingCart.png" className="shoppingCart" />
         {cartItems?.length && <span className="test">{cartItems?.length}</span>}
       </div>

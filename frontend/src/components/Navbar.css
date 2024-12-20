@@ -8,6 +8,8 @@
     /* min-height: 80px; */
     justify-content: space-between;
     padding: 5px;
+    position: fixed;
+    z-index: 999;
 }
 .infinity{
     color: white;
