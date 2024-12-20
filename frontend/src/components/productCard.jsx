@@ -20,31 +20,33 @@ function ProductCard({ product, setCartItems, cartItems }) {
         }}
       />
       <div className="card-body">
-        <h5 className="card-title">{product.title}</h5>
-        <p className="card-text">{product.description}</p>
-
-        {/* SVG Rating Component */}
+        <h5 className="card-title">{product.name}</h5>
+        
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <SvgRating value={product.rate?.average} />
-          <h6>by {product.rate?.usersCount} users</h6>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
+            justifyContent: "start",
             margin: "5px",
           }}
         >
           <h3>{product.price}</h3>
           <h5>$</h5>
         </div>
+        {/* SVG Rating Component */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "start",
+            alignItems: "center"
+          }}
+        >
+          <SvgRating value={product.rate?.average} />
+          <h6>by {product.rate?.usersCount} users</h6>
+        </div>
+
+        <div className="card-button-container">
         <button
           className="card-button"
           onClick={(e) => {
@@ -54,6 +56,7 @@ function ProductCard({ product, setCartItems, cartItems }) {
         >
           Add to cart
         </button>
+        </div>
       </div>
     </Link>
   );
