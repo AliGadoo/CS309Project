@@ -114,7 +114,7 @@ const UserProfile = ({ currentUser, setUser }) => {
               <div className="form-group">
                 <label>Image</label>
                 <input
-                  type="file"
+                  type="text"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
                 />

@@ -32,7 +32,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Home currentUser={currentUser} />} />
             <Route
               path="/signup"
               element={<Signup setUser={setCurrentUser} />}

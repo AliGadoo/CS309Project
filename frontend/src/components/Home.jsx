@@ -23,6 +23,7 @@ const Home = ({ currentUser }) => {
         cartItems={cartItems}
         setFilteredProducts={setFilteredProducts}
         products={products}
+        currentUser={currentUser}
       />
       <ProductList
         setCartItems={setCartItems}

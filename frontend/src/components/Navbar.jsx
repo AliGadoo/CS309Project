@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useEffect } from "react";
 import Logo from "./Logo";
@@ -7,7 +7,14 @@ export default function Navbar({
   cartItems,
   setFilteredProducts,
   products,
+  currentUser
 }) {
+
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    const activeUser = currentUser || storedUser;
+    const isLoggedIn = activeUser && activeUser.user;
+    const navigate = useNavigate();
+
   const [isNavOpen, setNavIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(null);
 
@@ -29,14 +36,33 @@ export default function Navbar({
     setFilteredProducts(filtered);
   };
 
+  const handleClickProfile = () =>{
+    if(isLoggedIn){
+      navigate("/userProfile")
+    }else {
+      navigate("/signup")
+    }
+  }
+
+  const handleClickCart = () => {
+    if(isLoggedIn){
+      navigate("/cart")
+    }else {
+      navigate("/signup")
+    }
+  }
   return (
     <nav className="navBar">
       <Logo />
 
       <h1 className="infinity">infinity</h1>
       <div className="wrapper">
-        <img src={'default-profile-img.jpg'} className="anonymous" />
-        <img src="/shoppingCart.png" className="shoppingCart" />
+        <img onClick={handleClickProfile} src={activeUser.user.image || "/default-profile-img.jpg"} className="anonymous" alt="profile"
+            onError={(e) => {
+              e.target.src = "./default-profile-img.jpg";
+            }}
+        />
+        <img onClick={handleClickCart} src="/shoppingCart.png" className="shoppingCart"  alt="cart"/>
         {cartItems?.length && <span className="test">{cartItems?.length}</span>}
       </div>
       <div className="test2">
