@@ -56,7 +56,11 @@ export default function Navbar({
       <Logo />
 
       <h1 className="infinity">infinity</h1>
-      <div className="wrapper">
+      {activeUser.user.isAdmin ?
+       <div className="admin-panel">
+        <Link to={'/addProduct'}>add product</Link>
+       </div>
+       :<div className="wrapper">
         <img onClick={handleClickProfile} src={activeUser.user.image || "/default-profile-img.jpg"} className="anonymous" alt="profile"
             onError={(e) => {
               e.target.src = "./default-profile-img.jpg";
@@ -64,7 +68,7 @@ export default function Navbar({
         />
         <img onClick={handleClickCart} src="/shoppingCart.png" className="shoppingCart"  alt="cart"/>
         {cartItems?.length && <span className="test">{cartItems?.length}</span>}
-      </div>
+      </div>}
       <div className="test2">
         <input
           type="text"

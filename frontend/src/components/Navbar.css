@@ -1,4 +1,4 @@
-.navBar{
+.navBar {
     background-color: black;
     display: flex;
     align-items: center;
@@ -11,7 +11,8 @@
     position: fixed;
     z-index: 999;
 }
-.infinity{
+
+.infinity {
     color: white;
     font-weight: bold;
     /* text-align: center; */
@@ -22,14 +23,16 @@
     font-style: italic;
     /* margin-right: 100px; */
 }
-.anonymous{
+
+.anonymous {
     width: 40px;
     height: 40px;
     border-radius: 100%;
     cursor: pointer;
     /* margin-right: 10px; */
 }
-.shoppingCart{
+
+.shoppingCart {
     width: 40px;
     height: 40px;
     /* border-radius: 100%; */
@@ -39,11 +42,12 @@
     top: 3px;
     cursor: pointer;
 }
-.wrapper{
+
+.wrapper {
     margin-right: 25px;
 }
 
-.test{
+.test {
     position: absolute;
     right: 17.5px;
     color: white;
@@ -57,10 +61,19 @@
     align-items: center;
     font-weight: bold;
 }
-.test2{
+
+.test2 {
     width: 100%;
     margin-left: 10px;
     margin-right: 10px;
     display: flex;
     align-items: center;
+}
+
+.admin-panel {
+    padding-right: 10px;
+}
+
+.admin-panel a {
+    color: wheat;
 }

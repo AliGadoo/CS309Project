@@ -4,7 +4,6 @@
     margin: 0;
     font-family: "Quicksand";
     box-sizing: border-box;
-    color: #171717e2;
 }
 
 a {
@@ -156,60 +155,75 @@ a {
     font-size: 18px;
     font-weight: 900;
 }
+
 @media(max-width: 1300px) {
-    .card1{
+    .card1 {
         width: 100%;
     }
-    .card2{
+
+    .card2 {
         width: 100%;
     }
-    .container1{
+
+    .container1 {
         flex-direction: column;
     }
-    .card2 p{
+
+    .card2 p {
         font-size: 18px;
     }
-    .card2 h2{
+
+    .card2 h2 {
         font-size: 30px;
     }
-    .card2 button{
+
+    .card2 button {
         width: 170px !important;
     }
 }
+
 @media(max-width: 800px) {
-  
-    .card2 p{
+
+    .card2 p {
         font-size: 15px;
     }
 }
+
 @media(max-width: 500px) {
     .card2 h3 {
         font-size: 15px;
     }
+
     .card2 h2 {
         font-size: 25px;
     }
-    .card2 p{
+
+    .card2 p {
         font-size: 10px;
     }
+
     .card2 button {
         width: 140px !important;
         margin: 0 !important;
         font-size: 10px;
     }
-    
+
 }
+
 @media(max-width: 500px) {
     .card2 h3 {
         font-size: 10px;
     }
+
     .card2 h2 {
         font-size: 20px;
     }
-    .card2 p{
+
+    .card2 p {
         font-size: 7px;
     }
-    .card2 strong{
+
+    .card2 strong {
         font-size: 10px;
     }
 }
