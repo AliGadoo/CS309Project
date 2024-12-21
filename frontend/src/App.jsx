@@ -8,6 +8,7 @@ import UserProfile from "./components/UserProfile";
 import SingleProductPage from "./components/SingleProductPage";
 import AdminProfile from "./components/adminProfile";
 import AddProduct from "./components/AddProduct";
+import Cart from "./components/Cart";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -38,7 +39,8 @@ function App() {
               element={<Signup setUser={setCurrentUser} />}
             />
             <Route path="/login" element={<Login setUser={setCurrentUser} />} />
-            <Route path="/cart" element={<OrderPage />} />
+            <Route path="/order" element={<OrderPage />} />
+            <Route path="/cart" element={<Cart />} />
             <Route
               path="/userProfile"
               element={
