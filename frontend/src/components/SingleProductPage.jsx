@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams , useNavigate } from "react-router-dom";
+import SvgRating from "./SvgRating";
 
 const SingleProductPage = ({ currentUser }) => {
   const { id } = useParams();
@@ -129,6 +130,10 @@ else if (errorMessage){
             <button onClick={handlePushInCart}>
               <i className="fa-solid fa-bag-shopping"></i> Add to Cart
             </button>
+          </div>
+          <div className="rate">
+            
+        
           </div>
         </div>
       )}

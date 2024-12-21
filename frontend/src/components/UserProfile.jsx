@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./UserProfile.css";
 import Signup from "./Signup";
 import { useState, useEffect } from "react";
@@ -84,9 +84,15 @@ const UserProfile = ({ currentUser, setUser }) => {
 
   return (
     <div>
+
       {activeUser ? (
         <div className="ground">
           <div className="profile-container">
+            <div style={{ display: "flex", justifyContent: "center", color: "#007bff;", backgroundColor: "#fff", padding: "10px", marginBottom: "10px" }}>
+              <Link to="/" style={{ display: "block", width: "100%", textAlign: "center" }}>
+                <i className="fas fa-home"></i> Home
+              </Link>
+            </div>
             <div className="profile-header">
               <img
                 className="profile-image"

@@ -4,20 +4,20 @@ import "./ProductCard.css";
 import SvgRating from "./SvgRating";
 
 function ProductCard({ product, setCartItems, cartItems }) {
-  const [count, setCount] = useState(1); 
+  const [count, setCount] = useState(1);
 
   const increaseCount = () => setCount(count + 1);
   const decreaseCount = () => setCount(count > 1 ? count - 1 : 1);
 
   const handleAddToCart = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const productWithCount = { ...product, count };
     setCartItems([...cartItems, productWithCount]);
   };
 
   return (
     <div className="card">
-      {}
+      { }
       <Link to={`/product/${product._id}`}>
         <img
           src={product.image}
@@ -43,8 +43,8 @@ function ProductCard({ product, setCartItems, cartItems }) {
           <h3>{product.price}</h3>
           <h5>$</h5>
         </div>
-        
-        {}
+
+        { }
         <div
           style={{
             display: "flex",
@@ -57,7 +57,7 @@ function ProductCard({ product, setCartItems, cartItems }) {
           <h6>by {product.rate?.usersCount} users</h6>
         </div>
 
-        {}
+        { }
         <div className="quantity-controls">
           <i className="fa-solid fa-minus" onClick={decreaseCount}></i>
           <strong>{count}</strong>
@@ -67,7 +67,7 @@ function ProductCard({ product, setCartItems, cartItems }) {
         <div className="card-button-container">
           <button
             className="card-button"
-            onClick={handleAddToCart} 
+            onClick={handleAddToCart}
           >
             Add to cart
           </button>
