@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 
 const SingleProductPage = ({ currentUser }) => {
   const { id } = useParams();
@@ -11,6 +11,8 @@ const SingleProductPage = ({ currentUser }) => {
   const [count, setCount] = useState(1);
   const [successMessage, setSuccessMessage] = useState(""); 
   const [errorMessage, setErrorMessage] = useState(""); 
+
+  const navigate = useNavigate();
 
   const handlePushInCart = () => {
     fetch(`http://localhost:5000/pushInCart`, {
@@ -29,7 +31,11 @@ const SingleProductPage = ({ currentUser }) => {
         console.log("Product added to cart:", data);
         if (data.success) {
           setSuccessMessage("Product added to cart!"); 
-          setTimeout(() => setSuccessMessage(""), 2000); 
+          setTimeout(() => {
+            setSuccessMessage("");
+            navigate("/cart");
+          }, 2000); 
+          
         } else {
           setErrorMessage(data.message || "Failed to add product to cart"); 
           setTimeout(() => setErrorMessage(""), 2000); 
@@ -65,13 +71,46 @@ const SingleProductPage = ({ currentUser }) => {
       </div>
     );
   }
-
+if (successMessage ){
+return (
+  <div>
+    <div style={{ 
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "green",
+      color: "white",
+      fontSize: "2rem",
+    }}>{successMessage}</div>
+  </div>
+)
+}
+else if (errorMessage){
   return (
     <div>
-      {}
-      {successMessage && <div className="success-message">{successMessage}</div>}
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
-      
+      <div style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "red",
+          color : "white",
+          fontSize: "2rem",
+          zIndex: 9999,
+        }}>{errorMessage}</div>
+    </div>
+  )
+}
+  
+
+ else return (
+    <div>
       {product && (
         <div className="container1">
           <div className="card1">
