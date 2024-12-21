@@ -388,10 +388,12 @@ app.get("/getCart/:userID", async (req, res) => {
 
     if (!cart.length) {
       return res.json({
-        success: false,
-        message: "there is no cart for this user",
+        success: true,
+        message: "The cart is empty",
+        cart: [],
       });
     }
+
     res.json({ success: true, cart });
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });

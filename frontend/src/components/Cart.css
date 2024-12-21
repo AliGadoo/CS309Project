@@ -1,0 +1,85 @@
+.cart-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.home-link i {
+    margin-right: 5px;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 20px;
+}
+
+.empty-cart-message {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #333;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-button {
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 5px;
+    user-select: none;
+}
+
+.product-quantity {
+    font-size: 16px;
+    color: #555;
+    margin: 0 10px;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.remove-button:hover {
+    background-color: #c82333;
+}
