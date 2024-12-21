@@ -101,8 +101,16 @@ a {
 }
 
 .card1 {
-    width: 50%;
     overflow: hidden;
+    background-color: white;
+}
+
+.container1 img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    position: relative;
 }
 
 .card2 {
@@ -131,7 +139,7 @@ a {
     border: none;
     border-radius: 10px;
     color: white;
-    font-size: 20px;    
+    font-size: 20px;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -218,7 +226,7 @@ a {
     }
 
     .card2 button {
-        width: 140px ;
+        width: 140px;
         margin: 0 !important;
         font-size: 10px;
     }
@@ -238,7 +246,8 @@ a {
         font-size: 7px;
     }
 
-    .card2 strong,h4 {
+    .card2 strong,
+    h4 {
         font-size: 10px;
     }
 
@@ -257,11 +266,13 @@ a {
         font-size: 7px;
     }
 
-    .card2 strong,h4 {
+    .card2 strong,
+    h4 {
         font-size: 10px;
     }
-    .card2 button{
-       width: 200px !important;
+
+    .card2 button {
+        width: 200px !important;
     }
 }
 
@@ -271,7 +282,7 @@ a {
 }
 
 .quantity-controls i {
-   font-size: 20px;
+    font-size: 20px;
     cursor: pointer;
     user-select: none;
     border-radius: 10px;
@@ -281,6 +292,7 @@ a {
     background-color: #FFF;
     color: black;
 }
+
 .success-message {
     color: white;
     padding: 10px;
@@ -291,9 +303,9 @@ a {
     border-radius: 5px;
     z-index: 1000;
     font-size: 20px;
-  }
-  
-  .error-message {
+}
+
+.error-message {
     color: white;
     padding: 10px;
     position: fixed;
@@ -303,5 +315,4 @@ a {
     border-radius: 5px;
     z-index: 1000;
     font-size: 20px;
-  }
-  
+}

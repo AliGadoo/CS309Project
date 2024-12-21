@@ -115,7 +115,11 @@ else if (errorMessage){
       {product && (
         <div className="container1">
           <div className="card1">
-            <img src={product.image} alt="product" />
+            <img src={product.image} alt="product" 
+              onError={(e) => {
+                e.target.src = "/default-product-img.png";
+              }}
+            />
           </div>
           <div className="card2">
             <h2>{product.name}</h2>
