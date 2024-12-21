@@ -14,13 +14,13 @@
     color: wheat;
 }
 
-.error-message {
+.error-message-addProduct {
     color: red;
     text-align: center;
     margin-bottom: 15px;
 }
 
-.success-message {
+.success-message-addProduct {
     color: green;
     text-align: center;
     margin-bottom: 15px;

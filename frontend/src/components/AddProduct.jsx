@@ -7,7 +7,7 @@ const AddProduct = ({ currentUser }) => {
     const isAdmin = activeUser.user.isAdmin;
 
     const [name, setName] = useState("");
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState();
     const [stock, setStock] = useState(1);
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
@@ -24,6 +24,13 @@ const AddProduct = ({ currentUser }) => {
             setIsValid(false);
             return;
         }
+
+        if(isNaN(price)){
+            setErrorMessage("Price must be Number");
+            setIsValid(false);
+            return;
+        }
+
         if (price <= 0) {
             setErrorMessage("Price must be greater than 0");
             setIsValid(false);
@@ -90,9 +97,19 @@ const AddProduct = ({ currentUser }) => {
                             <label className="form-label">Price:</label>
                             <input
                                 className="form-input"
-                                type="number"
+                                type="text"
                                 value={price}
-                                onChange={(e) => setPrice(Number(e.target.value))}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (isNaN(value) || value.trim() === "") {
+                                        setErrorMessage("Invalid input: Price must be a numeric value");
+                                        setIsValid(false);
+                                    } else {
+                                        setPrice(value);
+                                        setErrorMessage("");
+                                        setIsValid(true);
+                                    }
+                                }}
                                 required
                             />
                         </div>
@@ -138,12 +155,12 @@ const AddProduct = ({ currentUser }) => {
                             Add Product
                         </button>
                         {!isValid && (
-                            <p className="error-message" style={{ color: "red" }}>
+                            <p className="error-message-addProduct" style={{ color: "red" }}>
                                 {errorMessage}
                             </p>
                         )}
                         {successMessage && (
-                            <p className="success-message" style={{ color: "green" }}>
+                            <p className="success-message-addProduct" style={{ color: "green" }}>
                                 {successMessage}
                             </p>
                         )}
