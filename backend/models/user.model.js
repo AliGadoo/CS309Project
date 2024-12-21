@@ -36,6 +36,7 @@ const userSchema = new Schema(
         productID: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
+          ref: "Product",
         },
         count: { type: Number, required: true, default: 1 },
       },

@@ -349,6 +349,7 @@ app.delete(`/deleteFromCart`, async (req, res) => {
     if (!userID || !productID) {
       return res.json({ success: false, message: "Invalid input" });
     }
+
     const user = await User.findById(userID);
     if (!user) {
       return res.json({ success: false, message: "User not found" });
@@ -364,8 +365,10 @@ app.delete(`/deleteFromCart`, async (req, res) => {
         message: "Product not found in cart",
       });
     }
+
     user.cart = updatedCart;
     await user.save();
+
     return res.json({
       success: true,
       message: "Product removed from cart",
@@ -380,10 +383,12 @@ app.delete(`/deleteFromCart`, async (req, res) => {
 app.get("/getCart/:userID", async (req, res) => {
   try {
     const userID = req.params.userID;
-    const user = await User.findById(userID);
+    const user = await User.findById(userID).populate("cart.productID");
+
     if (!user) {
       return res.json({ success: false, message: "no user found" });
     }
+
     const cart = user.cart;
 
     if (!cart.length) {
@@ -398,7 +403,9 @@ app.get("/getCart/:userID", async (req, res) => {
   } catch (err) {
     return res.json({ success: false, message: "something went wrong" });
   }
+
 });
+
 
 app.put("/updateCount", async (req, res) => {
   try {
