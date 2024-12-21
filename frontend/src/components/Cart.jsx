@@ -70,10 +70,17 @@ export default function Cart() {
         setCart((prevCart) =>
             prevCart.map((product) =>
                 product.productID._id === productID
-                    ? { ...product, count: product.count + change }
+                    ? {
+                        ...product,
+                        count: Math.max(1, product.count + change), 
+                    }
                     : product
             )
         );
+    };
+
+    const calculateTotalPrice = () => {
+        return cart.reduce((total, product) => total + product.productID.price * product.count, 0).toFixed(2);
     };
 
     return (
@@ -85,21 +92,38 @@ export default function Cart() {
             {cart.length === 0 ? (
                 <p className="empty-cart-message">Your cart is empty.</p>
             ) : (
-                cart.map((product) => (
-                    <div key={product._id} className="cart-item">
-                        <p className="product-name">{product.productID.name}</p>
-                        <p className="product-price">${product.productID.price.toFixed(2)}</p>
-                        <div className="quantity-controls">
-                            <p className="product-quantity">Quantity: {product.count}</p>
+                <>
+                    {cart.map((product) => (
+                        <div key={product._id} className="cart-item">
+                            <p className="product-name">{product.productID.name}</p>
+                            <p className="product-price">${product.productID.price.toFixed(2)}</p>
+                            <div className="quantity-controls">
+                                <button
+                                    onClick={() => handleQuantityChange(product.productID._id, -1)}
+                                    className="quantity-button"
+                                >
+                                    <i className="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                                <p className="product-quantity">{product.count}</p>
+                                <button
+                                    onClick={() => handleQuantityChange(product.productID._id, 1)}
+                                    className="quantity-button"
+                                >
+                                    <i className="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <button
+                                onClick={() => handleRemoveFromCart(product.productID._id)}
+                                className="remove-button"
+                            >
+                                Remove
+                            </button>
                         </div>
-                        <button
-                            onClick={() => handleRemoveFromCart(product.productID._id)}
-                            className="remove-button"
-                        >
-                            Remove
-                        </button>
+                    ))}
+                    <div className="total-price">
+                        <p>Total Price: ${calculateTotalPrice()}</p>
                     </div>
-                ))
+                </>
             )}
         </div>
     );
