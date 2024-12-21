@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate , Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from './Logo'
 import './Navbar.css'
 
@@ -51,9 +51,30 @@ export default function Navbar({ cartItems, setFilteredProducts, products, curre
       <Logo />
       <h1 className="infinity">infinity</h1>
       {activeUser?.user?.isAdmin ? (
-        <div className="admin-panel">
-          <Link to="/addProduct">add product</Link>
-        </div>
+        <>
+          <div className="admin-panel">
+            <Link to="/addProduct">
+              <i className="fa-solid fa-plus" ></i>
+              add product
+            </Link>
+          </div>
+          <div className="wrapper">
+            <img
+              onClick={handleClickProfile}
+              src={activeUser?.user?.image || "/default-profile-img.jpg"}
+              className="anonymous"
+              alt="profile"
+              onError={(e) => { e.target.src = "./default-profile-img.jpg"; }}
+            />
+            <img
+              onClick={handleClickCart}
+              src="/shoppingCart.png"
+              className="shoppingCart"
+              alt="cart"
+            />
+            {cartItems?.length > 0 && <span className="test">{cartItems.length}</span>}
+          </div>
+        </>
       ) : (
         <div className="wrapper">
           <img
