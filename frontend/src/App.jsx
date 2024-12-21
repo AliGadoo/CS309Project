@@ -38,7 +38,7 @@ function App() {
               element={<Signup setUser={setCurrentUser} />}
             />
             <Route path="/login" element={<Login setUser={setCurrentUser} />} />
-            <Route path="/order" element={<OrderPage />} />
+            <Route path="/cart" element={<OrderPage />} />
             <Route
               path="/userProfile"
               element={
